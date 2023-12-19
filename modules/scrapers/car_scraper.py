@@ -8,10 +8,10 @@ import requests
 from bs4 import BeautifulSoup
 
 from modules.scrapers.get_advertisement import AdvertisementFetcher
-#from utils.logger import console_logger
-#from utils.logger import file_logger
 import logging
 from loguru import logger
+from tqdm import tqdm
+from resources.headers import PAGE_HEADER
 
 
 class CarScraper:
@@ -24,16 +24,17 @@ class CarScraper:
 
     def __init__(self, model_file_path, data_directory):
         self.model_file_path = os.path.join(os.getcwd(), model_file_path)
-        self.data_directory = os.path.join(os.getcwd(), data_directory)
+        self.data_directory = os.path.join(os.getcwd(), data_directory,'data')
+        self.log_directory = os.path.join(os.getcwd(), data_directory, 'logs')
         self.models = self._read_models()
         self.ad_fetcher = AdvertisementFetcher()
+        self.header = PAGE_HEADER
 
         pathlib.Path(self.data_directory).mkdir(parents=True,exist_ok=True)
 
         log_level = "DEBUG"
         log_format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS zz}</green> | <level>{level: <8}</level>  <b>{message}</b>"
-        #logger.add(sys.stderr, level=log_level, format=log_format, colorize=True, backtrace=True, diagnose=True)
-        logger.add(os.path.join(self.data_directory,'log.txt'), level=log_level, format=log_format, colorize=False, backtrace=True, diagnose=True)
+        logger.add(os.path.join(self.log_directory,'log.txt'), level=log_level, format=log_format, colorize=False, backtrace=True, diagnose=True)
 
 
     def _read_models(self):
@@ -50,28 +51,9 @@ class CarScraper:
             return:
                 list of links
         """
-        #console_logger.info('Scrapping page: %s', i)
         logger.info(f'Scrapping page: {i}')
-        headers = {
-            'User-Agent':
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-                'AppleWebKit/537.36 (KHTML, like Gecko) '
-                'Chrome/117.0.0.0 Safari/537.36',
-            'Accept':
-                'text/html,application/xhtml+xml,application'
-                '/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
-                'application/signed-exchange;v=b3;q=0.7',
-            'Accept-Language':
-                'pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Referer': 'https://www.google.com/',
-        }
-        #res = httpx.get(f'{path}?page={i}', headers=headers)
-        #res.raise_for_status()
-        res = requests.get(f'{path}?page={i}', headers=headers)
+        res = requests.get(f'{path}?page={i}', headers=self.header)
         soup = BeautifulSoup(res.content,'html.parser')
-        #soup = BeautifulSoup(res.text, features='lxml')
-        #car_links_section = soup.find(
-        #    'main', attrs={'data-testid': 'search-results'})
         car_links_section = soup.find('div', {'data-testid': 'search-results'})
         links = []
         for x in car_links_section.find_all('div'):
@@ -86,7 +68,6 @@ class CarScraper:
                 )
             except Exception:
                 pass
-        #logger.info('Found %s links', len(links))
         logger.info(f'Found {len(links)} links')
         return links
 
@@ -98,25 +79,11 @@ class CarScraper:
         """
         model = model.strip()
         logger.info(f'Start scrapping model: {model}')
-        #file_logger.info('Start scrapping model: %s', model)
         self.ad_fetcher.setup_fetcher()
         path = f'https://www.otomoto.pl/osobowe/{model}'
         try:
             res = requests.get(path)
-            headers = {
-                'User-Agent':
-                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-                    'AppleWebKit/537.36 (KHTML, like Gecko) '
-                    'Chrome/117.0.0.0 Safari/537.36',
-                'Accept':
-                    'text/html,application/xhtml+xml,application/xml;'
-                    'q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
-                    'application/signed-exchange;v=b3;q=0.7',
-                'Accept-Language':
-                    'pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7',
-                'Referer': 'https://www.google.com/',
-            }
-            res = httpx.get(path, headers=headers)
+            res = httpx.get(path, headers=self.header)
             res.raise_for_status()
             soup = BeautifulSoup(res.text, features='lxml')
             last_page_num = int(soup.find_all(
@@ -126,33 +93,24 @@ class CarScraper:
         last_page_num = min(last_page_num, 500)
 
         logger.info(f'Model has: {last_page_num} subpages')
-        #file_logger.info('Model has: %s subpages', last_page_num)
 
         pages = range(1, last_page_num + 1)
-        for page in pages:
+        for page in tqdm(pages):
             links = self.get_cars_in_page(path, page)
             self.ad_fetcher.fetch_ads(links)
-            time.sleep(0.2)
         self.ad_fetcher.save_ads(model)
 
         logger.info(f'End Scrapping model: {model}')
-        #file_logger.info('End Scrapping model: %s', model)
 
     def scrap_all_models(self):
         logger.info('Starting scrapping cars...')
-        #file_logger.info('Starting scrapping cars...')
         for model in self.models:
             self.scrap_model(model)
         logger.info('End scrapping cars')
-        #file_logger.info('End scrapping cars')
 
     def combine_data(self):
         logger.info('Combining data...')
-        #file_logger.info('Combining data...')
-        #xlsx_filenames = [os.path.join(
-        #    self.data_directory, f'{model.strip()}.csv')
-        #    for model in self.models
-        #]
+
         xlsx_filenames = [os.path.join(self.data_directory,file) for file in os.listdir(self.data_directory)]
         combined_data = []
         print(xlsx_filenames)
@@ -165,4 +123,3 @@ class CarScraper:
         df_all = pd.concat(combined_data, ignore_index=True)
         df_all.to_csv('car.csv', index=False)
         logger.info('Combined data saved to car.csv')
-        #file_logger.info('Combined data saved to car.csv')

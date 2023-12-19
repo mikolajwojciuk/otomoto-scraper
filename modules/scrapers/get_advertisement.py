@@ -9,6 +9,7 @@ import httpx
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from resources.headers import ADVERT_HEADERS
 
 
 
@@ -20,9 +21,10 @@ class AdvertisementFetcher:
     """
     MAX_THREADS = 8
 
-    def __init__(self, features_file_path='resources/input/feats.txt'):
+    def __init__(self, features_file_path='resources/features_names.txt'):
         self.features_file_path = os.path.join(os.getcwd(), features_file_path)
         self.all_features = self._read_features()
+        self.header = random.choice(ADVERT_HEADERS)
         self._cars = []
 
     def _read_features(self) -> List[str]:
@@ -37,46 +39,7 @@ class AdvertisementFetcher:
 
     def _download_url(self, path) -> Dict[str, str]:
         try:
-            headers = [
-                {
-                    'User-Agent':
-                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-                        'AppleWebKit/537.36 (KHTML, like Gecko) '
-                        'Chrome/117.0.0.0 Safari/537.36',
-                    'Accept':
-                        'text/html,application/xhtml+xml,application'
-                        '/xml;q=0.9,image/avif,image/webp,image/apng,*/*;'
-                        'q=0.8,application/signed-exchange;v=b3;q=0.7',
-                    'Accept-Language':
-                        'pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7',
-                    'Referer':
-                        'https://www.google.com/',
-                },
-                {
-                    'User-Agent':
-                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; '
-                        'rv:109.0) Gecko/20100101 Firefox/109.0',
-                    'Accept-Language': 'pl-PL,pl;q=0.9,en-US,en;q=0.7',
-                    'Accept': 'text/html,application/xhtml+xml,application/'
-                              'xml;q=0.9,image/avif,image/webp,'
-                              'image/apng,*/*;q=0.8',
-                    'Referer':
-                        'https://www.google.com/',
-                },
-                {
-                    'User-Agent':
-                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15;'
-                        ' rv:109.0) Gecko/20100101 Firefox/117.0',
-                    'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                    'Accept': 'text/html,application/xhtml+xml,'
-                              'application/xml;q=0.9,image/avif,'
-                              'image/webp,*/*;q=0.8',
-                    'Referer':
-                        'https://www.google.com/',
-                }
-            ]
-            header = random.choice(headers)
-            res = httpx.get(path, headers=header)
+            res = httpx.get(path, headers=self.header)
             res = requests.get(path)
             res.raise_for_status()
             soup = BeautifulSoup(res.text, features='lxml')
