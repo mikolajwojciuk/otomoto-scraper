@@ -5,3 +5,4 @@ bs4
 loguru
 lxml
 tqdm
+pre-commit

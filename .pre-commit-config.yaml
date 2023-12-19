@@ -20,35 +20,7 @@ repos:
             exclude: (docs/|notebooks/){% if cookiecutter.jupytext == "No" %}
           - id: black-jupyter
             files: \.ipynb$
-    {%- endif -%}
 
-    {% if cookiecutter.jupytext == "Yes" %}
-
-      # Save .ipynb to .py:percent format
-    - repo: https://github.com/mwouts/jupytext
-      rev: v1.15.2
-      hooks:
-        - id: jupytext
-          args: ["--from", ".ipynb", "--to", "py:percent", "--pipe-fmt", "black"]
-          files: "\\.ipynb$"
-          additional_dependencies:
-            - black==23.10.1
-    {%- endif %}
-
-      # Cleaning unused imports.
-    - repo: https://github.com/hadialqattan/pycln
-      rev: v2.3.0
-      hooks:
-          - id: pycln
-            args: ["-a"]
-            exclude: (docs/|notebooks/)
-
-    # Modernizes python code and upgrade syntax for newer versions of the language
-    - repo: https://github.com/asottile/pyupgrade
-      rev: v3.15.0
-      hooks:
-          - id: pyupgrade
-            args: [--py38-plus]
 
       # Used to have proper type annotations for library code.
     - repo: https://github.com/pre-commit/mirrors-mypy
@@ -61,13 +33,6 @@ repos:
             additional_dependencies: []
             exclude: (/test_|setup.py|/tests/|docs/)
 
-      # Sort imports alphabetically, and automatically separated into sections and by type.
-    - repo: https://github.com/timothycrosley/isort
-      rev: 5.12.0
-      hooks:
-          - id: isort
-            args: ["--profile", "black"]
-            exclude: (docs/|notebooks/)
 
       # Checks Python source files for errors.
     - repo: https://github.com/PyCQA/flake8
