@@ -56,11 +56,14 @@ class CarScraper:
                 'pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7',
             'Referer': 'https://www.google.com/',
         }
-        res = httpx.get(f'{path}?page={i}', headers=headers)
-        res.raise_for_status()
-        soup = BeautifulSoup(res.text, features='lxml')
-        car_links_section = soup.find(
-            'main', attrs={'data-testid': 'search-results'})
+        #res = httpx.get(f'{path}?page={i}', headers=headers)
+        #res.raise_for_status()
+        res = requests.get(f'{path}?page={i}', headers=headers)
+        soup = BeautifulSoup(res.content,'html.parser')
+        #soup = BeautifulSoup(res.text, features='lxml')
+        #car_links_section = soup.find(
+        #    'main', attrs={'data-testid': 'search-results'})
+        car_links_section = soup.find('div', {'data-testid': 'search-results'})
         links = []
         for x in car_links_section.find_all('div'):
             try:
@@ -137,11 +140,13 @@ class CarScraper:
     def combine_data(self):
         console_logger.info('Combining data...')
         file_logger.info('Combining data...')
-        xlsx_filenames = [os.path.join(
-            self.data_directory, f'{model.strip()}.csv')
-            for model in self.models
-        ]
+        #xlsx_filenames = [os.path.join(
+        #    self.data_directory, f'{model.strip()}.csv')
+        #    for model in self.models
+        #]
+        xlsx_filenames = [os.path.join(self.data_directory,file) for file in os.listdir(self.data_directory)]
         combined_data = []
+        print(xlsx_filenames)
         for filename in xlsx_filenames:
             try:
                 combined_data.append(pd.read_excel(
