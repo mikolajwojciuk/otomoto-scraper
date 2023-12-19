@@ -1,4 +1,6 @@
 pandas
-requirements
+requests
 httpx
 bs4
+loguru
+lxml

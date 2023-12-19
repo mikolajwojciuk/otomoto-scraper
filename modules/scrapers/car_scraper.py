@@ -1,14 +1,17 @@
 import os
+import sys
 import time
-
+import pathlib
 import httpx
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
 from modules.scrapers.get_advertisement import AdvertisementFetcher
-from utils.logger import console_logger
-from utils.logger import file_logger
+#from utils.logger import console_logger
+#from utils.logger import file_logger
+import logging
+from loguru import logger
 
 
 class CarScraper:
@@ -20,12 +23,18 @@ class CarScraper:
     """
 
     def __init__(self, model_file_path, data_directory):
-        console_logger.info('Initializing Car scrapper')
-        file_logger.info('Initializing Car scrapper')
         self.model_file_path = os.path.join(os.getcwd(), model_file_path)
         self.data_directory = os.path.join(os.getcwd(), data_directory)
         self.models = self._read_models()
         self.ad_fetcher = AdvertisementFetcher()
+
+        pathlib.Path(self.data_directory).mkdir(parents=True,exist_ok=True)
+
+        log_level = "DEBUG"
+        log_format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS zz}</green> | <level>{level: <8}</level>  <b>{message}</b>"
+        #logger.add(sys.stderr, level=log_level, format=log_format, colorize=True, backtrace=True, diagnose=True)
+        logger.add(os.path.join(self.data_directory,'log.txt'), level=log_level, format=log_format, colorize=False, backtrace=True, diagnose=True)
+
 
     def _read_models(self):
         with open(self.model_file_path, 'r', encoding='utf-8') as file:
@@ -41,8 +50,8 @@ class CarScraper:
             return:
                 list of links
         """
-        console_logger.info('Scrapping page: %s', i)
-        file_logger.info('Scrapping page: %s', i)
+        #console_logger.info('Scrapping page: %s', i)
+        logger.info(f'Scrapping page: {i}')
         headers = {
             'User-Agent':
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
@@ -77,8 +86,8 @@ class CarScraper:
                 )
             except Exception:
                 pass
-        console_logger.info('Found %s links', len(links))
-        file_logger.info('Found %s links', len(links))
+        #logger.info('Found %s links', len(links))
+        logger.info(f'Found {len(links)} links')
         return links
 
     def scrap_model(self, model):
@@ -88,8 +97,8 @@ class CarScraper:
                  model: model to scrap
         """
         model = model.strip()
-        console_logger.info('Start scrapping model: %s', model)
-        file_logger.info('Start scrapping model: %s', model)
+        logger.info(f'Start scrapping model: {model}')
+        #file_logger.info('Start scrapping model: %s', model)
         self.ad_fetcher.setup_fetcher()
         path = f'https://www.otomoto.pl/osobowe/{model}'
         try:
@@ -116,8 +125,8 @@ class CarScraper:
             last_page_num = 1
         last_page_num = min(last_page_num, 500)
 
-        console_logger.info('Model has: %s subpages', last_page_num)
-        file_logger.info('Model has: %s subpages', last_page_num)
+        logger.info(f'Model has: {last_page_num} subpages')
+        #file_logger.info('Model has: %s subpages', last_page_num)
 
         pages = range(1, last_page_num + 1)
         for page in pages:
@@ -126,20 +135,20 @@ class CarScraper:
             time.sleep(0.2)
         self.ad_fetcher.save_ads(model)
 
-        console_logger.info('End Scrapping model: %s', model)
-        file_logger.info('End Scrapping model: %s', model)
+        logger.info(f'End Scrapping model: {model}')
+        #file_logger.info('End Scrapping model: %s', model)
 
     def scrap_all_models(self):
-        console_logger.info('Starting scrapping cars...')
-        file_logger.info('Starting scrapping cars...')
+        logger.info('Starting scrapping cars...')
+        #file_logger.info('Starting scrapping cars...')
         for model in self.models:
             self.scrap_model(model)
-        console_logger.info('End scrapping cars')
-        file_logger.info('End scrapping cars')
+        logger.info('End scrapping cars')
+        #file_logger.info('End scrapping cars')
 
     def combine_data(self):
-        console_logger.info('Combining data...')
-        file_logger.info('Combining data...')
+        logger.info('Combining data...')
+        #file_logger.info('Combining data...')
         #xlsx_filenames = [os.path.join(
         #    self.data_directory, f'{model.strip()}.csv')
         #    for model in self.models
@@ -155,5 +164,5 @@ class CarScraper:
                 pass
         df_all = pd.concat(combined_data, ignore_index=True)
         df_all.to_csv('car.csv', index=False)
-        console_logger.info('Combined data saved to car.csv')
-        file_logger.info('Combined data saved to car.csv')
+        logger.info('Combined data saved to car.csv')
+        #file_logger.info('Combined data saved to car.csv')
