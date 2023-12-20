@@ -137,7 +137,7 @@ class AdvertisementFetcher:
                 features["Waluta"] = None
         return features
 
-    def fetch_ads(self, links: list[str]):
+    def fetch_ads(self, links: List[str]):
         """Fetches ads
         Args:
              links(list[str]): links
