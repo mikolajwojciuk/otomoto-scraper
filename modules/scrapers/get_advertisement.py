@@ -1,212 +1,166 @@
 import os
 import random
-import time
 from concurrent.futures import ThreadPoolExecutor
-from typing import Dict
-from typing import List
+from typing import Dict, List
+from loguru import logger
 
-import httpx
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from resources.headers import ADVERT_HEADERS
 
 
+class FetchException(Exception):
+    """Generic informational exception."""
+
 
 class AdvertisementFetcher:
     """
-        Fetches advertisements
-        Args:
-             features_file_path: path to file with features
+    Fetches advertisements
+    Args:
+         features_file_path: path to file with features
     """
+
     MAX_THREADS = 8
 
-    def __init__(self, features_file_path='resources/features_names.txt'):
+    def __init__(self, features_file_path="resources/features_names.txt"):
         self.features_file_path = os.path.join(os.getcwd(), features_file_path)
         self.all_features = self._read_features()
         self.header = random.choice(ADVERT_HEADERS)
-        self._cars = []
+        self.cars = []
 
     def _read_features(self) -> List[str]:
-        with open(self.features_file_path, 'r', encoding='utf-8') as featsFile:
-            features = featsFile.readlines()
+        with open(self.features_file_path, "r", encoding="utf-8") as feats_file:
+            features = feats_file.readlines()
         return [x.strip() for x in features]
 
     def _make_line(self, main_features) -> Dict[str, str]:
-        temp = {feat: main_features.get(feat, None)
-                for feat in self.all_features}
+        temp = {feat: main_features.get(feat, None) for feat in self.all_features}
         return temp
 
     def _download_url(self, path) -> Dict[str, str]:
         try:
-            res = httpx.get(path, headers=self.header)
             res = requests.get(path)
             res.raise_for_status()
-            soup = BeautifulSoup(res.text, features='lxml')
-            for style_tag in soup.find_all('style'):
+        except requests.exceptions.RequestException as e:
+            logger.info(f"Could not retrieve data from {path}.")
+            logger.info(f"Error: {e}")
+            raise SystemExit() from e
+
+        soup = BeautifulSoup(res.text, features="lxml")
+        if style_tags := soup.find_all("style"):
+            for style_tag in style_tags:
                 style_tag.decompose()
 
-            features = self._get_main_features(path, soup)
-
-            extendend_features = self._get_extended_features(path, soup)
-            features.update(extendend_features)
-
-            price_feat = self._get_price(path, soup)
-            features.update(price_feat)
-
-            currency_feat = self._get_currency(path, soup)
-            features.update(currency_feat)
-
-            price_details_feat = self._get_price_details(path, soup)
-            features.update(price_details_feat)
-
-            features = self._make_line(features)
-
-        except Exception as e:
-            return None
-
-        time.sleep(0.25)
+        features = self._get_main_features(soup)
+        extendend_features = self._get_extended_features(path, soup)
+        features.update(extendend_features)
+        price_feat = self._get_price(soup)
+        features.update(price_feat)
+        currency_feat = self._get_currency(soup)
+        features.update(currency_feat)
+        price_details_feat = self._get_price_details(soup)
+        features.update(price_details_feat)
+        features = self._make_line(features)
 
         return features
 
-    def _get_main_features(self, path, soup) -> Dict[str, str]:
-        features = dict()
-        try:
-            main_params = soup.find(
-                'div', {'data-testid': 'content-details-section'})
-            for param in main_params.find_all(
-                    'div',
-                    attrs={'data-testid': 'advert-details-item'}
-            ):
-                try:
+    def _get_main_features(self, soup) -> Dict[str, str]:
+        features = {}
+        if main_params := soup.find("div", {"data-testid": "content-details-section"}):
+            if advert_details := main_params.find_all("div", attrs={"data-testid": "advert-details-item"}):
+                for param in advert_details:
                     el = [x.text for x in param]
                     features.update({el[0]: el[1]})
-                except Exception:
-                    pass
-        except Exception:
-            try:
-                main_params = soup.find_all(class_='offer-params__item')
+
+        else:
+            if main_params := soup.find_all(class_="offer-params__item"):
                 features = {
-                    param.find(
-                        'span',
-                        class_='offer-params__label'
-                    ).text.strip():
-                        param.find(
-                            'div',
-                            class_='offer-params__value'
-                    ).text.strip()
+                    param.find("span", class_="offer-params__label")
+                    .text.strip(): param.find("div", class_="offer-params__value")
+                    .text.strip()
                     for param in main_params
                 }
-            except Exception as e:
-                pass
+
         return features
 
     def _get_extended_features(self, path, soup) -> Dict[str, str]:
-        features = dict()
+        features = {}
+
         try:
-            extendend_params = soup.find_all(
-                'div',
-                attrs={'data-testid': 'accordion-collapse-inner-content'}
-            )
+            extendend_params = soup.find_all("div", attrs={"data-testid": "accordion-collapse-inner-content"})
             for param in extendend_params:
-                for x in param.find_all('p'):
-                    try:
-                        features[x.text.strip()] = 1
-                    except Exception:
-                        pass
-        except Exception:
+                for x in param.find_all("p"):
+                    features[x.text.strip()] = 1
+        except FetchException as e:
+            logger.info(
+                f"""Error while fetching extended features using accordion-collapse-inner-content: {e}.
+                Processing with parameter-feature-item"""
+            )
             try:
-                extendend_params = soup.find_all(
-                    'li', class_='parameter-feature-item')
+                extendend_params = soup.find_all("li", class_="parameter-feature-item")
                 for param in extendend_params:
                     features[param.text.strip()] = 1
-            except Exception as e:
-                console_logger.error(
-                    f'Error {e} while fetching extended features from {path}')
-                file_logger.error(
-                    f'Error {e} while fetching extended features from {path}')
-                pass
+            except FetchException as ee:
+                logger.info(f"Error {ee} while fetching extended features from {path}")
         return features
 
-    def _get_price(self, path, soup) -> Dict[str, str]:
-        features = dict()
+    def _get_price(self, soup) -> Dict[str, str]:
+        features = {}
         try:
-            price = ''.join(soup.select(
-                'h3[class^="offer-price__number"]')[0].text.strip().split())
-            features['Cena'] = price
-        except Exception:
-            try:
-                price = ''.join(
-                    soup.find('span',
-                              class_='offer-price__number').text.
-                    strip().split()[:-1]
-                )
-                features['Cena'] = price
-            except Exception:
-                features['Cena'] = None
+            price = "".join(soup.select('h3[class^="offer-price__number"]')[0].text.strip().split())
+            features["Cena"] = price
+        except FetchException as e:
+            logger.info(
+                f"""Error while fetching price feature from h3 offer-price__number: {e}.
+            Processing with span offer-price__number"""
+            )
+            if price := "".join(soup.find("span", class_="offer-price__number").text.strip().split()[:-1]):
+                features["Cena"] = price
+            else:
+                features["Cena"] = None
         return features
 
-    def _get_currency(self, path, soup) -> Dict[str, str]:
-        features = dict()
-        try:
-            currency = ''.join(soup.select(
-                'p[class^="offer-price__currency"]')[0].text.strip().split())
-            features['Waluta'] = currency
-        except Exception:
-            try:
-                currency = soup.find(
-                    'span', class_='offer-price__currency').text.strip()
-                features['Waluta'] = currency
-            except Exception:
-                features['Waluta'] = None
+    def _get_currency(self, soup) -> Dict[str, str]:
+        features = {}
+
+        if currency := "".join(soup.select('p[class^="offer-price__currency"]')[0].text.strip().split()):
+            features["Waluta"] = currency
+
+        elif currency := soup.find("span", class_="offer-price__currency").text.strip():
+            features["Waluta"] = currency
+        else:
+            features["Waluta"] = None
         return features
 
-    def _get_price_details(self, path, soup) -> Dict[str, str]:
-        features = dict()
-        try:
-            price_details = soup.find(
-                'p',
-                attrs={'data-testid': 'price-with-evaluation-labels'}
-            ).text.strip()
-            features['Szczegóły ceny'] = price_details
-        except Exception:
-            try:
-                price_details = soup.find(
-                    'span', class_='offer-price__details').text.strip()
-                features['Szczegóły ceny'] = price_details
-            except Exception:
-                features['Szczegóły ceny'] = None
+    def _get_price_details(self, soup) -> Dict[str, str]:
+        features = {}
+
+        if price_details := soup.find("p", attrs={"data-testid": "price-with-evaluation-labels"}):
+            features["Szczegóły ceny"] = price_details.text.strip()
+        elif price_details := soup.find("span", class_="offer-price__details"):
+            features["Szczegóły ceny"] = price_details.text.strip()
+        else:
+            features["Szczegóły ceny"] = None
         return features
 
-    def fetch_ads(self, links):
-        """ Fetches ads
-            Args:
-                 links: links
+    def fetch_ads(self, links: list[str]):
+        """Fetches ads
+        Args:
+             links(list[str]): links
         """
-        with ThreadPoolExecutor(
-                max_workers=min(
-                    self.MAX_THREADS,
-                    len(links)
-                )
-        ) as executor:
-            features = [
-                executor.submit(self._download_url, link)
-                for link in links
-            ]
+        with ThreadPoolExecutor(max_workers=min(self.MAX_THREADS, len(links))) as executor:
+            features = [executor.submit(self._download_url, link) for link in links]
             for feature in features:
                 result = feature.result()
-                if result is not None and result['Cena'] is not None:
-                    self._cars.append(result)
+                if result is not None and result["Cena"] is not None:
+                    self.cars.append(result)
 
-    def save_ads(self, model):
+    def save_ads(self, model: str):
         """
-            Saves ads
-            Args:
-                 model: model
+        Saves ads
+        Args:
+             model(str): model
         """
 
-        pd.DataFrame(self._cars).to_csv(
-            f'output/data/{model}.csv', index=False)
-
-    def setup_fetcher(self):
-        self._cars = []
+        pd.DataFrame(self.cars).to_csv(f"output/data/{model}.csv", index=False)

@@ -1,0 +1,224 @@
+2023-12-19 22:34:53.304 Środkowoeuropejski czas stand. | INFO      Start scrapping model: lamborghini
+2023-12-19 22:34:56.009 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 22:34:56.014 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 22:36:27.399 Środkowoeuropejski czas stand. | INFO      Start scrapping model: lamborghini
+2023-12-19 22:36:29.509 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 22:36:29.513 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 22:36:30.459 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-19 22:36:41.493 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-19 22:36:42.493 Środkowoeuropejski czas stand. | INFO      Found 15 links
+2023-12-19 22:36:48.531 Środkowoeuropejski czas stand. | INFO      End Scrapping model: lamborghini
+2023-12-19 22:51:24.478 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 22:51:26.481 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 22:51:26.485 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 22:51:28.197 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-19 22:51:39.316 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-19 22:51:40.234 Środkowoeuropejski czas stand. | INFO      Found 17 links
+2023-12-19 22:51:46.272 Środkowoeuropejski czas stand. | INFO      End Scrapping model: alpina
+2023-12-19 23:48:53.154 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:48:54.251 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 23:48:54.256 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 23:48:55.118 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-19 23:49:12.334 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:49:53.838 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:49:54.317 Środkowoeuropejski czas stand. | INFO      Model has: 1 subpages
+2023-12-19 23:49:54.320 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 23:50:15.108 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:50:15.551 Środkowoeuropejski czas stand. | INFO      Model has: 1 subpages
+2023-12-19 23:50:15.556 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 23:52:09.728 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:52:10.244 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from {path}.
+2023-12-19 23:52:38.860 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:52:39.477 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from {path}.
+2023-12-19 23:53:30.660 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:53:32.159 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 23:53:32.163 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 23:53:33.029 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-19 23:53:48.458 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:54:20.718 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:54:21.166 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from {path}.
+2023-12-19 23:54:43.985 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:54:44.422 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowehuj/alpina.
+2023-12-19 23:55:05.351 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:55:06.450 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-19 23:55:06.454 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-19 23:55:07.635 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-19 23:55:43.668 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:55:44.107 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowehuj/alpina.
+2023-12-19 23:55:44.107 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowehuj/alpina
+2023-12-19 23:56:24.908 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:56:25.342 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowehuj/alpina.
+2023-12-19 23:56:25.343 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowehuj/alpina
+2023-12-19 23:58:27.014 Środkowoeuropejski czas stand. | INFO      Start scrapping model: alpina
+2023-12-19 23:58:27.470 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowehuj/alpina.
+2023-12-19 23:58:27.470 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowehuj/alpina
+2023-12-20 00:10:13.107 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 00:10:14.441 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 00:10:14.445 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 00:10:15.798 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 00:10:26.624 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 00:10:27.534 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 00:10:33.150 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 00:10:33.152 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 00:12:37.134 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 00:12:38.277 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 00:12:38.281 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 00:12:39.329 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 00:12:50.551 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 00:12:51.483 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 00:12:56.617 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 00:12:56.618 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 00:12:56.658 Środkowoeuropejski czas stand. | INFO      Combined data saved to car.csv
+2023-12-20 00:14:25.860 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 00:14:26.872 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 00:14:26.876 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 00:14:27.771 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 00:14:38.048 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 00:14:38.929 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 00:14:44.369 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 00:14:44.370 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 00:14:44.407 Środkowoeuropejski czas stand. | INFO      Combined data saved to car.csv
+2023-12-20 00:17:59.540 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 00:18:00.627 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 00:18:00.631 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 00:18:01.936 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 00:18:13.023 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 00:18:13.907 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 00:18:19.561 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 00:18:19.563 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 00:18:19.613 Środkowoeuropejski czas stand. | INFO      Combined data saved to C:\Users\Mikołaj\Desktop\otomoto-scraper\output\data\lamborghini.csv
+2023-12-20 10:11:36.686 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:11:38.036 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:11:38.044 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:11:39.198 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:11:45.439 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 10:11:46.367 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 10:11:49.269 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 10:11:49.271 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 10:12:22.813 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 10:13:41.694 Środkowoeuropejski czas stand. | INFO      Combining data...
+2023-12-20 10:13:41.763 Środkowoeuropejski czas stand. | INFO      Combined data saved to C:\Users\Mikołaj\Desktop\otomoto-scraper\output\data\combined.csv
+2023-12-20 10:15:33.672 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:15:34.791 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:15:34.795 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:15:35.783 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:15:42.228 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 10:15:43.273 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 10:15:46.379 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 10:15:54.216 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:15:55.202 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:15:55.206 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:15:56.621 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:15:57.729 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-kabrio-2019r-1-4-165km-manual-lift-nawigacja-klimatronik-bezoweskory-ID6FUTtz.html.
+2023-12-20 10:15:57.730 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-kabrio-2019r-1-4-165km-manual-lift-nawigacja-klimatronik-bezoweskory-ID6FUTtz.htmlhuj
+2023-12-20 10:15:57.769 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500e-ID6FEz34.html.
+2023-12-20 10:15:57.770 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500e-ID6FEz34.htmlhuj
+2023-12-20 10:15:57.770 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-yamaha-racing-factory-235km-ID6FZwa4.html.
+2023-12-20 10:15:57.771 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-yamaha-racing-factory-235km-ID6FZwa4.htmlhuj
+2023-12-20 10:15:57.777 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-competizione-ID6G37is.html.
+2023-12-20 10:15:57.777 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-competizione-ID6G37is.htmlhuj
+2023-12-20 10:15:57.796 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-500-lpg-ID6FT1Ay.html.
+2023-12-20 10:15:57.797 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-bev-turismo-cabrio-2023r-ID6FZNPe.html.
+2023-12-20 10:15:57.797 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-500-lpg-ID6FT1Ay.htmlhuj
+2023-12-20 10:15:57.798 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-bev-turismo-cabrio-2023r-ID6FZNPe.htmlhuj
+2023-12-20 10:15:57.813 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-fiat-500-abarth-t-jet-ID6FUv0w.html.
+2023-12-20 10:15:57.814 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-fiat-500-abarth-t-jet-ID6FUv0w.htmlhuj
+2023-12-20 10:15:57.996 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-iwl-salon-pl-biala-perla-ID6Fofmo.html.
+2023-12-20 10:15:57.996 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-iwl-salon-pl-biala-perla-ID6Fofmo.htmlhuj
+2023-12-20 10:15:58.757 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-europa-abarth-automat-nawigacja-szyberdach-klimatronik-ID6G4B6r.html.
+2023-12-20 10:15:58.758 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-europa-abarth-automat-nawigacja-szyberdach-klimatronik-ID6G4B6r.htmlhuj
+2023-12-20 10:15:58.880 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-1-4-t-jet-165-km-2022r-system-audio-hi-fi-beats-biksenon-ID6G3SxS.html.
+2023-12-20 10:15:58.880 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-1-4-t-jet-165-km-2022r-system-audio-hi-fi-beats-biksenon-ID6G3SxS.htmlhuj
+2023-12-20 10:15:58.916 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-punto-evo-punto-supersport-abarth-1-4turbo-limitowana-edycja-popcorn-ID6G2PWK.html.
+2023-12-20 10:15:58.916 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-punto-evo-punto-supersport-abarth-1-4turbo-limitowana-edycja-popcorn-ID6G2PWK.htmlhuj
+2023-12-20 10:15:58.922 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-595-ID6FVJcO.html.
+2023-12-20 10:15:58.922 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-595-ID6FVJcO.htmlhuj
+2023-12-20 10:15:58.956 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-1-wlasciciel-pl-salon-ID6G3GFX.html.
+2023-12-20 10:15:58.957 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-1-wlasciciel-pl-salon-ID6G3GFX.htmlhuj
+2023-12-20 10:15:59.098 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-ID6FIIrB.html.
+2023-12-20 10:15:59.099 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-ID6FIIrB.htmlhuj
+2023-12-20 10:15:59.102 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-252ps-375nm-f-vat-sabelt-sforza-koshi-kw-mg-ID6FYRYx.html.
+2023-12-20 10:15:59.103 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-252ps-375nm-f-vat-sabelt-sforza-koshi-kw-mg-ID6FYRYx.htmlhuj
+2023-12-20 10:15:59.205 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6FFMVh.html.
+2023-12-20 10:15:59.206 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6FFMVh.htmlhuj
+2023-12-20 10:15:59.528 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-fiat-punto-abarth-ID6FQyok.html.
+2023-12-20 10:15:59.529 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-fiat-punto-abarth-ID6FQyok.htmlhuj
+2023-12-20 10:15:59.925 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6G3CnY.html.
+2023-12-20 10:15:59.925 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6G3CnY.htmlhuj
+2023-12-20 10:15:59.938 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-595-s4-1-4-t-jet-145-km-elaborabile-ID6G1hZ1.html.
+2023-12-20 10:15:59.939 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-595-s4-1-4-t-jet-145-km-elaborabile-ID6G1hZ1.htmlhuj
+2023-12-20 10:15:59.942 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-2017-salon-pl-ID6FswnE.html.
+2023-12-20 10:15:59.942 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-2017-salon-pl-ID6FswnE.htmlhuj
+2023-12-20 10:15:59.950 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-turismo-165km-pl-brazowe-skory-ID6FW2uh.html.
+2023-12-20 10:15:59.951 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-turismo-165km-pl-brazowe-skory-ID6FW2uh.htmlhuj
+2023-12-20 10:16:00.095 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6FfKu7.html.
+2023-12-20 10:16:00.095 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-ID6FfKu7.htmlhuj
+2023-12-20 10:16:00.133 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-1-4-benzynamanualklimaserwisgwarancja-w-cenie-ID6FdK6x.html.
+2023-12-20 10:16:00.133 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-1-4-benzynamanualklimaserwisgwarancja-w-cenie-ID6FdK6x.htmlhuj
+2023-12-20 10:16:00.167 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-fiat-500-abarth-595-salon-polska-bezwypadkowy-automat-ID6G4hZO.html.
+2023-12-20 10:16:00.168 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-fiat-500-abarth-595-salon-polska-bezwypadkowy-automat-ID6G4hZO.htmlhuj
+2023-12-20 10:16:00.377 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-ID6G1lh7.html.
+2023-12-20 10:16:00.377 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-ID6G1lh7.htmlhuj
+2023-12-20 10:16:00.913 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-500c-cabrio-skrzynia-automatyczna-doinwestowany-ID6FOAsY.html.
+2023-12-20 10:16:00.913 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-abarth-500c-cabrio-skrzynia-automatyczna-doinwestowany-ID6FOAsY.htmlhuj
+2023-12-20 10:16:00.941 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-salon-polska-ID6FZuBe.html.
+2023-12-20 10:16:00.941 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-salon-polska-ID6FZuBe.htmlhuj
+2023-12-20 10:16:00.969 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500-cabrio-manual-tuning-mishimoto-sparco-zarejestrowany-oplacony-ID6G15kY.html.
+2023-12-20 10:16:00.969 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500-cabrio-manual-tuning-mishimoto-sparco-zarejestrowany-oplacony-ID6G15kY.htmlhuj
+2023-12-20 10:16:00.987 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-nowa-cena-competizione-unikat-cabrio-sabelt-beats-ceramika-ID6G2lc0.html.
+2023-12-20 10:16:00.988 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-nowa-cena-competizione-unikat-cabrio-sabelt-beats-ceramika-ID6G2lc0.htmlhuj
+2023-12-20 10:16:01.049 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-navigacja-grand-turismo-skora-pdc-ID6G0YAk.html.
+2023-12-20 10:16:01.049 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-navigacja-grand-turismo-skora-pdc-ID6G0YAk.htmlhuj
+2023-12-20 10:16:01.087 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-500e-ID6FRISr.html.
+2023-12-20 10:16:01.088 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-500e-ID6FRISr.htmlhuj
+2023-12-20 10:16:01.221 Środkowoeuropejski czas stand. | INFO      Could not retrieve data from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595c-competizione-ID6FOnaO.html.
+2023-12-20 10:16:01.221 Środkowoeuropejski czas stand. | INFO      Error: 404 Client Error: Not Found for url: https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595c-competizione-ID6FOnaO.htmlhuj
+2023-12-20 10:39:15.765 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:39:17.013 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:39:17.017 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:39:18.209 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:39:24.450 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 10:39:25.341 Środkowoeuropejski czas stand. | INFO      Found 14 links
+2023-12-20 10:39:28.311 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 10:51:49.898 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:51:51.066 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:51:51.069 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:51:52.005 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:51:53.525 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-iwl-salon-pl-biala-perla-ID6Fofmo.html
+2023-12-20 10:51:54.422 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-695-abatrth-695-esseesse-fv-ID6G4Cin.html
+2023-12-20 10:51:56.484 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-595-fiat-500-abarth-595-salon-polska-bezwypadkowy-automat-ID6G4hZO.html
+2023-12-20 10:51:56.987 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-salon-polska-ID6FZuBe.html
+2023-12-20 10:52:11.762 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:52:13.062 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:52:13.066 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:52:13.888 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:52:15.288 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-grande-punto-iwl-salon-pl-biala-perla-ID6Fofmo.html
+2023-12-20 10:52:16.337 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-695-abatrth-695-esseesse-fv-ID6G4Cin.html
+2023-12-20 10:52:18.258 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-595-fiat-500-abarth-595-salon-polska-bezwypadkowy-automat-ID6G4hZO.html
+2023-12-20 10:52:18.694 Środkowoeuropejski czas stand. | INFO      Error while fetching extended features from https://www.otomoto.pl/osobowe/oferta/abarth-595-abarth-595-pista-salon-polska-ID6FZuBe.html
+2023-12-20 10:56:14.862 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 10:56:16.366 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 10:56:16.370 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 10:56:17.365 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 10:56:23.070 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 10:56:24.010 Środkowoeuropejski czas stand. | INFO      Found 14 links
+2023-12-20 10:56:27.127 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 10:59:43.832 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:03:54.083 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:03:55.284 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 11:03:55.288 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 11:03:56.166 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 11:04:02.217 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 11:04:03.294 Środkowoeuropejski czas stand. | INFO      Found 14 links
+2023-12-20 11:04:06.426 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 11:09:29.817 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:09:31.080 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 11:09:31.084 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 11:09:32.316 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 11:11:39.214 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:11:40.488 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 11:11:40.493 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 11:11:41.652 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 11:11:47.812 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 11:11:48.789 Środkowoeuropejski czas stand. | INFO      Found 14 links
+2023-12-20 11:11:52.107 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth

@@ -1,6 +1,5 @@
 pandas
 requests
-httpx
 bs4
 loguru
 lxml

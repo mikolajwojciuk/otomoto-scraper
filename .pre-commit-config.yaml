@@ -21,19 +21,6 @@ repos:
           - id: black-jupyter
             files: \.ipynb$
 
-
-      # Used to have proper type annotations for library code.
-    - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v1.6.1
-      hooks:
-          - id: mypy
-            args: []
-            # You can add additional plugins for mypy below
-            # such as types-python-dateutil
-            additional_dependencies: []
-            exclude: (/test_|setup.py|/tests/|docs/)
-
-
       # Checks Python source files for errors.
     - repo: https://github.com/PyCQA/flake8
       rev: 6.1.0
@@ -62,11 +49,3 @@ repos:
             #   # here:
             #   ["--extension-pkg-whitelist=pydantic"]
 
-      # Finds common security issues in Python code.
-    - repo: https://github.com/PyCQA/bandit
-      rev: 1.7.5
-      hooks:
-          - id: bandit
-            args: [-c, pyproject.toml, --recursive, src]
-            additional_dependencies: [".[toml]"] # required for pyproject.toml support
-            exclude:  (notebooks/)
