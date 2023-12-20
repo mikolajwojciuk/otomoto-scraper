@@ -87,7 +87,7 @@ class AdvertisementFetcher:
             for param in extendend_params:
                 for x in param.find_all("p"):
                     features[x.text.strip()] = 1
-        except AttributeError as e:
+        except (IndexError, AttributeError) as e:
             logger.info(
                 f"""Error while fetching extended features using accordion-collapse-inner-content: {e}.
                 Processing with parameter-feature-item"""
@@ -96,7 +96,7 @@ class AdvertisementFetcher:
                 extendend_params = soup.find_all("li", class_="parameter-feature-item")
                 for param in extendend_params:
                     features[param.text.strip()] = 1
-            except AttributeError as ee:
+            except (IndexError, AttributeError) as ee:
                 logger.info(f"Error {ee} while fetching extended features from {path}")
         return features
 
@@ -105,7 +105,7 @@ class AdvertisementFetcher:
         try:
             price = "".join(soup.select('h3[class^="offer-price__number"]')[0].text.strip().split())
             features["Cena"] = price
-        except AttributeError as e:
+        except (IndexError, AttributeError) as e:
             logger.info(
                 f"""Error while fetching price feature from h3 offer-price__number: {e}.
             Processing with span offer-price__number"""
@@ -113,7 +113,7 @@ class AdvertisementFetcher:
             try:
                 price = "".join(soup.find("span", class_="offer-price__number").text.strip().split()[:-1])
                 features["Cena"] = price
-            except AttributeError as ee:
+            except (IndexError, AttributeError) as ee:
                 logger.info(f"Error {ee} while fetching price feature.")
                 features["Cena"] = None
         return features
