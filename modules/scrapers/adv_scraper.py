@@ -1,7 +1,7 @@
 import os
 import random
-from concurrent.futures import ThreadPoolExecutor
-from typing import Dict, List
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Dict, List, Optional
 from loguru import logger
 
 import pandas as pd
@@ -34,14 +34,15 @@ class AdvertisementFetcher:
         temp = {feat: main_features.get(feat, None) for feat in self.all_features}
         return temp
 
-    def _download_url(self, path) -> Dict[str, str]:
+    def _download_url(self, path) -> Optional[Dict[str, str]]:
         try:
             res = requests.get(path)
             res.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.info(f"Could not retrieve data from {path}.")
             logger.info(f"Error: {e}")
-            raise SystemExit() from e
+            logger.info(f"Skipping {path} url.")
+            return None
 
         soup = BeautifulSoup(res.text, features="lxml")
         if style_tags := soup.find_all("style"):
@@ -142,9 +143,11 @@ class AdvertisementFetcher:
         Args:
              links(list[str]): links
         """
-        with ThreadPoolExecutor(max_workers=min(self.MAX_THREADS, len(links))) as executor:
-            features = [executor.submit(self._download_url, link) for link in links]
-            for feature in features:
+        with ThreadPoolExecutor(max_workers=min(self.MAX_THREADS, len(links) + 1)) as executor:
+            features = []
+            for link in links:
+                features.append(executor.submit(self._download_url, link))
+            for feature in as_completed(features):
                 result = feature.result()
                 if result is not None and result["Cena"] is not None:
                     self.cars.append(result)

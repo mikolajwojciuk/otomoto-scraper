@@ -6,3 +6,5 @@
 - some simple models for predicting car price based on features
 - streamlit app interface
 - configuration file
+- naming conventions
+- trying to make scraping faster ...

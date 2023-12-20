@@ -38,7 +38,7 @@ class CarScraper:
             logger.info("Manufacturers data not found. Fetching into resources/car_makes.txt")
             self._scrape_makes_models()
 
-        self.models = self._read_models()
+        self.makers = self._read_makers()
         self.ad_fetcher = AdvertisementFetcher()
         self.header = PAGE_HEADER
         pathlib.Path(self.data_directory).mkdir(parents=True, exist_ok=True)
@@ -71,12 +71,12 @@ class CarScraper:
             for maker in list(results.keys()):
                 maker_file.write(f"{maker}\n")
 
-    def _read_models(self):
+    def _read_makers(self):
         with open(self.car_makers_file_path, "r", encoding="utf-8") as file:
-            models = file.readlines()
-        return models
+            makers = [line for line in file if not line.isspace()]
+        return makers
 
-    def _get_cars_in_page(self, path, i):
+    def _get_cars_in_page(self, path, i, maker):
         """
         Gets cars in page
         Args:
@@ -85,30 +85,31 @@ class CarScraper:
         return:
             list of links
         """
-        logger.info(f"Scrapping page: {i}")
+        logger.info(f"Scrapping maker: {maker} page: {i}")
         res = requests.get(f"{path}?page={i}", headers=self.header)
         soup = BeautifulSoup(res.content, "html.parser")
         car_links_section = soup.find("div", {"data-testid": "search-results"})
         links = []
-        for x in car_links_section.find_all("div"):
-            if articles := x.find("article", attrs={"data-media-size": True}):
-                if articles_data := articles.find("a", href=True)["href"]:
-                    links.append(articles_data)
+        if car_links_section:
+            for x in car_links_section.find_all("div"):
+                if articles := x.find("article", attrs={"data-media-size": True}):
+                    if articles_data := articles.find("a", href=True)["href"]:
+                        links.append(articles_data)
         logger.info(f"Found {len(links)} links")
         return links
 
-    def scrap_maker(self, model: str):
+    def scrap_maker(self, maker: str):
         """_summary_
 
         Args:
-            model (str): name
+            maker (str): Manufacturer name.
 
         Raises:
             SystemExit: Error when obtaining HTTP request.
         """
-        model = model.strip()
-        logger.info(f"Start scrapping maker: {model}")
-        path = f"https://www.otomoto.pl/osobowe/{model}"
+        maker = maker.strip()
+        logger.info(f"Start scrapping maker: {maker}")
+        path = f"https://www.otomoto.pl/osobowe/{maker}"
 
         try:
             res = requests.get(path)
@@ -125,22 +126,22 @@ class CarScraper:
             last_page_num = 1
 
         last_page_num = min(last_page_num, 500)
-
         logger.info(f"Model has: {last_page_num} subpages")
 
         pages = range(1, last_page_num + 1)
+        ad_fetcher = AdvertisementFetcher()
         for page in tqdm(pages):
-            links = self._get_cars_in_page(path, page)
-            self.ad_fetcher.fetch_ads(links)
-        self.ad_fetcher.save_ads(model)
+            links = self._get_cars_in_page(path, page, maker)
+            ad_fetcher.fetch_ads(links)
+        ad_fetcher.save_ads(maker)
 
-        logger.info(f"End Scrapping model: {model}")
+        logger.info(f"End Scrapping maker: {maker}")
 
-    def scrap_all_models(self):
+    def scrap_all_makers(self):
         """Scrap all models listed in resources/car_makes.txt file"""
         logger.info("Starting scrapping cars...")
-        for model in self.models:
-            self.scrap_maker(model)
+        for maker in self.makers:
+            self.scrap_maker(maker)
         logger.info("End scrapping cars")
 
     def combine_data(self, filename: str = "combined.csv") -> None:
