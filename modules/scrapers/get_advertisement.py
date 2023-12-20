@@ -10,10 +10,6 @@ from bs4 import BeautifulSoup
 from resources.headers import ADVERT_HEADERS
 
 
-class FetchException(Exception):
-    """Generic informational exception."""
-
-
 class AdvertisementFetcher:
     """
     Fetches advertisements
@@ -59,8 +55,7 @@ class AdvertisementFetcher:
         features.update(price_feat)
         currency_feat = self._get_currency(soup)
         features.update(currency_feat)
-        price_details_feat = self._get_price_details(soup)
-        features.update(price_details_feat)
+        features.update({"Url": str(path)})
         features = self._make_line(features)
 
         return features
@@ -92,7 +87,7 @@ class AdvertisementFetcher:
             for param in extendend_params:
                 for x in param.find_all("p"):
                     features[x.text.strip()] = 1
-        except FetchException as e:
+        except AttributeError as e:
             logger.info(
                 f"""Error while fetching extended features using accordion-collapse-inner-content: {e}.
                 Processing with parameter-feature-item"""
@@ -101,7 +96,7 @@ class AdvertisementFetcher:
                 extendend_params = soup.find_all("li", class_="parameter-feature-item")
                 for param in extendend_params:
                     features[param.text.strip()] = 1
-            except FetchException as ee:
+            except AttributeError as ee:
                 logger.info(f"Error {ee} while fetching extended features from {path}")
         return features
 
@@ -110,7 +105,7 @@ class AdvertisementFetcher:
         try:
             price = "".join(soup.select('h3[class^="offer-price__number"]')[0].text.strip().split())
             features["Cena"] = price
-        except FetchException as e:
+        except AttributeError as e:
             logger.info(
                 f"""Error while fetching price feature from h3 offer-price__number: {e}.
             Processing with span offer-price__number"""
@@ -118,7 +113,7 @@ class AdvertisementFetcher:
             try:
                 price = "".join(soup.find("span", class_="offer-price__number").text.strip().split()[:-1])
                 features["Cena"] = price
-            except FetchException as ee:
+            except AttributeError as ee:
                 logger.info(f"Error {ee} while fetching price feature.")
                 features["Cena"] = None
         return features
@@ -129,7 +124,7 @@ class AdvertisementFetcher:
         try:
             currency = "".join(soup.select('p[class^="offer-price__currency"]')[0].text.strip().split())
             features["Waluta"] = currency
-        except FetchException as e:
+        except AttributeError as e:
             logger.info(
                 f"""Error while fetching currency feature from p offer-price__currency: {e}.
             Processing with span offer-price__currency"""
@@ -137,29 +132,9 @@ class AdvertisementFetcher:
             try:
                 currency = soup.find("span", class_="offer-price__currency").text.strip()
                 features["Waluta"] = currency
-            except FetchException as ee:
+            except AttributeError as ee:
                 logger.info(f"Error {ee} while fetching currency feature.")
                 features["Waluta"] = None
-        return features
-
-    def _get_price_details(self, soup) -> Dict[str, str]:
-        features = {}
-
-        try:
-            price_details = soup.find("p", attrs={"data-testid": "price-with-evaluation-labels"})
-            features["Szczegóły ceny"] = price_details.text.strip()
-        except FetchException as e:
-            logger.info(
-                f"""Error while fetching price details feature from price-with-evaluation-labels: {e}.
-            Processing with span offer-price__details"""
-            )
-
-            try:
-                price_details = soup.find("span", class_="offer-price__details")
-                features["Szczegóły ceny"] = price_details.text.strip()
-            except FetchException as ee:
-                logger.info(f"Error {ee} while fetching price details feature.")
-                features["Szczegóły ceny"] = None
         return features
 
     def fetch_ads(self, links: list[str]):
