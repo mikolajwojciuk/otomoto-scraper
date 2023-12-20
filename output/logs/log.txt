@@ -1070,3 +1070,30 @@
 2023-12-20 15:09:23.107 Środkowoeuropejski czas stand. | INFO      Found 32 links
 2023-12-20 15:09:28.479 Środkowoeuropejski czas stand. | INFO      Scrapping page: 5
 2023-12-20 15:09:29.705 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:14:36.794 Środkowoeuropejski czas stand. | INFO      Starting scrapping cars...
+2023-12-20 15:14:36.794 Środkowoeuropejski czas stand. | INFO      Start scrapping maker: abarth
+2023-12-20 15:14:37.989 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 15:14:37.993 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 15:14:39.121 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:14:44.764 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 15:14:45.776 Środkowoeuropejski czas stand. | INFO      Found 13 links
+2023-12-20 15:14:48.469 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 15:14:48.470 Środkowoeuropejski czas stand. | INFO      Start scrapping maker: acura
+2023-12-20 15:14:49.507 Środkowoeuropejski czas stand. | INFO      Model has: 1 subpages
+2023-12-20 15:14:49.508 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 15:14:50.359 Środkowoeuropejski czas stand. | INFO      Found 19 links
+2023-12-20 15:15:15.528 Środkowoeuropejski czas stand. | INFO      Start scrapping maker: alfa-romeo
+2023-12-20 15:15:16.605 Środkowoeuropejski czas stand. | INFO      Model has: 46 subpages
+2023-12-20 15:15:16.609 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 15:15:17.784 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:15:23.329 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 15:15:24.446 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:15:29.888 Środkowoeuropejski czas stand. | INFO      Scrapping page: 3
+2023-12-20 15:15:31.181 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:15:36.824 Środkowoeuropejski czas stand. | INFO      Scrapping page: 4
+2023-12-20 15:15:37.951 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:15:43.585 Środkowoeuropejski czas stand. | INFO      Scrapping page: 5
+2023-12-20 15:15:44.853 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 15:15:49.172 Środkowoeuropejski czas stand. | INFO      Error while fetching price feature from h3 offer-price__number: list index out of range.
+            Processing with span offer-price__number
+2023-12-20 15:15:49.173 Środkowoeuropejski czas stand. | INFO      Error 'NoneType' object has no attribute 'text' while fetching price feature.

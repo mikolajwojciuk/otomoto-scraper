@@ -124,7 +124,7 @@ class AdvertisementFetcher:
         try:
             currency = "".join(soup.select('p[class^="offer-price__currency"]')[0].text.strip().split())
             features["Waluta"] = currency
-        except AttributeError as e:
+        except (IndexError, AttributeError) as e:
             logger.info(
                 f"""Error while fetching currency feature from p offer-price__currency: {e}.
             Processing with span offer-price__currency"""
@@ -132,7 +132,7 @@ class AdvertisementFetcher:
             try:
                 currency = soup.find("span", class_="offer-price__currency").text.strip()
                 features["Waluta"] = currency
-            except AttributeError as ee:
+            except (IndexError, AttributeError) as ee:
                 logger.info(f"Error {ee} while fetching currency feature.")
                 features["Waluta"] = None
         return features
