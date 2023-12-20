@@ -222,3 +222,14 @@
 2023-12-20 11:11:47.812 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
 2023-12-20 11:11:48.789 Środkowoeuropejski czas stand. | INFO      Found 14 links
 2023-12-20 11:11:52.107 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 11:48:43.852 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:48:44.899 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 11:48:44.903 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 11:48:45.892 Środkowoeuropejski czas stand. | INFO      Found 32 links
+2023-12-20 11:48:51.806 Środkowoeuropejski czas stand. | INFO      Scrapping page: 2
+2023-12-20 11:48:52.721 Środkowoeuropejski czas stand. | INFO      Found 14 links
+2023-12-20 11:48:55.741 Środkowoeuropejski czas stand. | INFO      End Scrapping model: abarth
+2023-12-20 11:55:59.670 Środkowoeuropejski czas stand. | INFO      Start scrapping model: abarth
+2023-12-20 11:56:00.838 Środkowoeuropejski czas stand. | INFO      Model has: 2 subpages
+2023-12-20 11:56:00.842 Środkowoeuropejski czas stand. | INFO      Scrapping page: 1
+2023-12-20 11:56:01.993 Środkowoeuropejski czas stand. | INFO      Found 32 links

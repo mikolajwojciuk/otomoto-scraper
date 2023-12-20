@@ -18,7 +18,7 @@ class AdvertisementFetcher:
     """
     Fetches advertisements
     Args:
-         features_file_path: path to file with features
+         features_file_path: Path to file with features
     """
 
     MAX_THREADS = 8
@@ -115,33 +115,51 @@ class AdvertisementFetcher:
                 f"""Error while fetching price feature from h3 offer-price__number: {e}.
             Processing with span offer-price__number"""
             )
-            if price := "".join(soup.find("span", class_="offer-price__number").text.strip().split()[:-1]):
+            try:
+                price = "".join(soup.find("span", class_="offer-price__number").text.strip().split()[:-1])
                 features["Cena"] = price
-            else:
+            except FetchException as ee:
+                logger.info(f"Error {ee} while fetching price feature.")
                 features["Cena"] = None
         return features
 
     def _get_currency(self, soup) -> Dict[str, str]:
         features = {}
 
-        if currency := "".join(soup.select('p[class^="offer-price__currency"]')[0].text.strip().split()):
+        try:
+            currency = "".join(soup.select('p[class^="offer-price__currency"]')[0].text.strip().split())
             features["Waluta"] = currency
-
-        elif currency := soup.find("span", class_="offer-price__currency").text.strip():
-            features["Waluta"] = currency
-        else:
-            features["Waluta"] = None
+        except FetchException as e:
+            logger.info(
+                f"""Error while fetching currency feature from p offer-price__currency: {e}.
+            Processing with span offer-price__currency"""
+            )
+            try:
+                currency = soup.find("span", class_="offer-price__currency").text.strip()
+                features["Waluta"] = currency
+            except FetchException as ee:
+                logger.info(f"Error {ee} while fetching currency feature.")
+                features["Waluta"] = None
         return features
 
     def _get_price_details(self, soup) -> Dict[str, str]:
         features = {}
 
-        if price_details := soup.find("p", attrs={"data-testid": "price-with-evaluation-labels"}):
+        try:
+            price_details = soup.find("p", attrs={"data-testid": "price-with-evaluation-labels"})
             features["Szczegóły ceny"] = price_details.text.strip()
-        elif price_details := soup.find("span", class_="offer-price__details"):
-            features["Szczegóły ceny"] = price_details.text.strip()
-        else:
-            features["Szczegóły ceny"] = None
+        except FetchException as e:
+            logger.info(
+                f"""Error while fetching price details feature from price-with-evaluation-labels: {e}.
+            Processing with span offer-price__details"""
+            )
+
+            try:
+                price_details = soup.find("span", class_="offer-price__details")
+                features["Szczegóły ceny"] = price_details.text.strip()
+            except FetchException as ee:
+                logger.info(f"Error {ee} while fetching price details feature.")
+                features["Szczegóły ceny"] = None
         return features
 
     def fetch_ads(self, links: list[str]):
