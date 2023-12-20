@@ -1,0 +1,44 @@
+1500
+2500
+3500
+Astro
+Avalanche
+Aveo
+Blazer
+Bolt
+Camaro
+Caprice
+Captiva
+Chevelle
+Chevy Van
+Corvette
+Cruze
+El Camino
+Epica
+Equinox
+Evanda
+Express
+G
+HHR
+Impala
+Kalos
+Lacetti
+Malibu
+Matiz
+Monte Carlo
+Monza
+Nova
+Nubira
+Orlando
+Inny
+Rezzo
+S-10
+Silverado
+Spark
+Suburban
+Tahoe
+Trailblazer
+Trans Sport
+Traverse
+Trax
+Volt

@@ -2,8 +2,10 @@ import os
 import pathlib
 import pandas as pd
 import requests
+import json
 from bs4 import BeautifulSoup
-from modules.scrapers.get_advertisement import AdvertisementFetcher
+from modules.scrapers.adv_scraper import AdvertisementFetcher
+from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
 from resources.headers import PAGE_HEADER
@@ -13,19 +15,12 @@ class CarScraper:
     """
     Scraps cars from otomoto.pl
     Args:
-        model_file_path: path to file with models
         data_directory: path to directory where data will be saved
     """
 
-    def __init__(self, model_file_path, data_directory):
-        self.model_file_path = os.path.join(os.getcwd(), model_file_path)
+    def __init__(self, data_directory):
         self.data_directory = os.path.join(os.getcwd(), data_directory, "data")
         self.log_directory = os.path.join(os.getcwd(), data_directory, "logs")
-        self.models = self._read_models()
-        self.ad_fetcher = AdvertisementFetcher()
-        self.header = PAGE_HEADER
-
-        pathlib.Path(self.data_directory).mkdir(parents=True, exist_ok=True)
 
         log_level = "DEBUG"
         log_format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS zz}</green> | <level>{level: <8}</level>  <b>{message}</b>"
@@ -38,8 +33,46 @@ class CarScraper:
             diagnose=True,
         )
 
+        self.car_makers_file_path = os.path.join("resources", "car_makes.txt")
+        if not os.path.exists(self.car_makers_file_path):
+            logger.info("Manufacturers data not found. Fetching into resources/car_makes.txt")
+            self._scrape_makes_models()
+
+        self.models = self._read_models()
+        self.ad_fetcher = AdvertisementFetcher()
+        self.header = PAGE_HEADER
+        pathlib.Path(self.data_directory).mkdir(parents=True, exist_ok=True)
+
+    def _scrape_makes_models(self) -> None:
+        """Function for scraping car manufacturers and car models.
+        Inteded for single use when there is a need to update existing cars and models.
+        """
+
+        res = requests.get("https://www.otomoto.pl/ajax/jsdata/params/")
+        data = res.text.split("var searchConditions = ")[1]
+        data = data.split(";var searchCondition")[0]
+        items = json.loads(data)
+        source = items["values"]["573"]["571"]
+        makes = list(source)
+
+        results = {}
+
+        resources_path = Path("resources/car_models")
+        resources_path.mkdir(parents=True, exist_ok=True)
+
+        for make in makes:
+            results[make] = [model["value"] for model in source[make]]
+
+            with open(resources_path.joinpath(str(make) + ".txt"), "w", encoding="utf-8") as models_file:
+                for model in list(results[make]):
+                    models_file.write(f"{model}\n")
+
+        with open(self.car_makers_file_path, "w", encoding="utf-8") as maker_file:
+            for maker in list(results.keys()):
+                maker_file.write(f"{maker}\n")
+
     def _read_models(self):
-        with open(self.model_file_path, "r", encoding="utf-8") as file:
+        with open(self.car_makers_file_path, "r", encoding="utf-8") as file:
             models = file.readlines()
         return models
 
@@ -64,7 +97,7 @@ class CarScraper:
         logger.info(f"Found {len(links)} links")
         return links
 
-    def scrap_model(self, model: str):
+    def scrap_maker(self, model: str):
         """_summary_
 
         Args:
@@ -74,7 +107,7 @@ class CarScraper:
             SystemExit: Error when obtaining HTTP request.
         """
         model = model.strip()
-        logger.info(f"Start scrapping model: {model}")
+        logger.info(f"Start scrapping maker: {model}")
         path = f"https://www.otomoto.pl/osobowe/{model}"
 
         try:
@@ -107,7 +140,7 @@ class CarScraper:
         """Scrap all models listed in resources/car_makes.txt file"""
         logger.info("Starting scrapping cars...")
         for model in self.models:
-            self.scrap_model(model)
+            self.scrap_maker(model)
         logger.info("End scrapping cars")
 
     def combine_data(self, filename: str = "combined.csv") -> None:

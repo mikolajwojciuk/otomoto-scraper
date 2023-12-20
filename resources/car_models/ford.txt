@@ -1,0 +1,58 @@
+Aerostar
+B-MAX
+Bronco
+C-MAX
+Capri
+Cougar
+Courier
+Crown
+Econoline
+EcoSport
+EDGE
+Escape
+Escort
+Excursion
+Expedition
+Explorer
+F150
+F250
+F350
+Fiesta
+Flex
+Focus
+Focus C-Max
+Freestar
+Fusion
+Galaxy
+Granada
+Grand C-MAX
+Tourneo Connect Grand
+GT
+KA
+Ka+
+Kuga
+Maverick
+Mercury
+Mondeo
+Mustang
+Mustang Mach-E
+Inny
+Probe
+Puma
+Ranchero
+Ranger
+Ranger Raptor
+S-Max
+Scorpio
+Sierra
+Taunus
+Taurus
+Thunderbird
+Tourneo Connect
+Tourneo Courier
+Tourneo Custom
+Transit
+Transit Connect
+Transit Courier
+Transit Custom
+Windstar
