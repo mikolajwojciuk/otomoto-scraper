@@ -223,5 +223,5 @@ Zewnętrzne oklejenie
 Zestaw głośnomówiący
 Zmiana biegów w kierownicy
 Cena
-Szczegóły ceny
 Waluta
+Url

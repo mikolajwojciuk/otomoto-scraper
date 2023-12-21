@@ -1,4 +1,10 @@
+- creating default file for logging
+- creating output directory if one does not exist
+- modify logging so it saves logs to file
+- fix features export to csv
 - add functionality to scrap not only car makes but also models
 - some simple models for predicting car price based on features
 - streamlit app interface
-- fixing too generic exceptions
+- configuration file
+- naming conventions
+- trying to make scraping faster ...
