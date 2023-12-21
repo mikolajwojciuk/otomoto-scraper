@@ -17,7 +17,7 @@ class AdvertisementFetcher:
          features_file_path: Path to file with features
     """
 
-    MAX_THREADS = 8
+    MAX_THREADS = 4
 
     def __init__(self, features_file_path="resources/features_names.txt"):
         self.features_file_path = os.path.join(os.getcwd(), features_file_path)

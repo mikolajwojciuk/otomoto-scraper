@@ -5,3 +5,5 @@ loguru
 lxml
 tqdm
 pre-commit
+pymongo
+python-dotenv
