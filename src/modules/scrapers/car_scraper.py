@@ -128,7 +128,6 @@ class CarScraper:
             last_page_num = int(pagination_list_item[-1].text)
         else:
             last_page_num = 1
-        print(last_page_num)
         last_page_num = min(last_page_num, 500)
         logger.info(f"Model has: {last_page_num} subpages")
 

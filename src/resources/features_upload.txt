@@ -1,0 +1,30 @@
+Oferta od
+Marka pojazdu
+Model pojazdu
+Wersja
+Generacja
+Rok produkcji
+Przebieg
+Pojemność skokowa
+Rodzaj paliwa
+Moc
+Skrzynia biegów
+Napęd
+Spalanie W Mieście
+Typ nadwozia
+Liczba drzwi
+Liczba miejsc
+Kolor
+Rodzaj koloru
+Kraj pochodzenia
+Leasing
+VAT marża
+Faktura VAT
+Zarejestrowany w Polsce
+Bezwypadkowy
+Serwisowany w ASO
+Stan
+Hak
+Cena
+Waluta
+Url
