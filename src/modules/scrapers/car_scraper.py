@@ -103,7 +103,7 @@ class CarScraper:
         return links
 
     def scrap_maker(self, maker: str):
-        """_summary_
+        """Scrap data from single car manufacturer.
 
         Args:
             maker (str): Manufacturer name.
