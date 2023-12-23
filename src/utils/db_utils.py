@@ -5,6 +5,8 @@ import pandas as pd
 import pymongo
 from tqdm.auto import tqdm, trange
 
+pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
+
 
 def upload_to_db(
     csv_files: List[str], features: Union[List[str], str], min_n_records: int = 100, db_name: str = "otomoto-scraper"
@@ -65,6 +67,47 @@ def _process_dataframe(df: pd.DataFrame, min_n_records: int) -> pd.DataFrame:
     df.reset_index(inplace=True)
     df.columns = df.columns.str.replace(",", "")
     df = df[df.groupby("Model pojazdu")["Model pojazdu"].transform("size") >= min_n_records]
+    df.drop(
+        columns=[
+            "Wersja",
+            "Pokaż oferty z numerem VIN",
+            "Kategoria",
+            "Generacja",
+            "Emisja CO2",
+            "Rodzaj własności baterii",
+            "Pojemność baterii",
+            "Spalanie W Mieście",
+            "Metalik",
+            "Leasing",
+            "VAT marża",
+            "Faktura VAT",
+            "Okres gwarancji producenta",
+            "Możliwość finansowania",
+            "Pierwsza rejestracja",
+            "Pierwszy właściciel",
+            "Ma numer rejestracyjny",
+            "Autonomia",
+        ],
+        inplace=True,
+    )
 
-    print(df.empty)
+    binary_str_columns = [
+        "Kierownica po prawej (Anglik)",
+        "Zarejestrowany w Polsce",
+        "Bezwypadkowy",
+        "Serwisowany w ASO",
+    ]
+
+    for column_name in binary_str_columns:
+        df.loc[df[column_name] == "Tak", column_name] = 1.0
+        df[column_name].fillna(0.0, inplace=True)
+
+    binary_columns = [
+        column
+        for column in df.columns
+        if ((df[column].nunique() == 1 or df[column].nunique() == 0) and df[column].dtype == "float64")
+    ]
+
+    for column in binary_columns:
+        df[column].fillna(0.0, inplace=True)
     return df
