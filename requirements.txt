@@ -7,3 +7,5 @@ tqdm
 pre-commit
 pymongo
 python-dotenv
+boto3
+s3fs

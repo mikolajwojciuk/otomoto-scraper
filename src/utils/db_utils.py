@@ -2,14 +2,17 @@ from typing import List, Union
 import os
 from dotenv import load_dotenv
 import pandas as pd
-import pymongo
+import boto3
 from tqdm.auto import tqdm, trange
 
 pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
 
 
 def upload_to_db(
-    csv_files: List[str], features: Union[List[str], str], min_n_records: int = 100, db_name: str = "otomoto-scraper"
+    csv_files: List[str],
+    features: Union[List[str], str],
+    min_n_records: int = 100,
+    s3_bucket_name: str = "otomoto-scrapper",
 ) -> None:
     """Function for uploading scraped csv files to MongoDB database
 
@@ -17,7 +20,7 @@ def upload_to_db(
         csv_files (List[str]): List of csv files.
         features (Union[List[str],str]): List of features or path to text file with features.
         min_n_records (int): Minimum number of records for car model for it to be uploaded. Defaults to 100.
-        db_name (str): Name of the database to which data will be uploaded.
+        s3_bucket_name (str): Name of the AWS S3 bucket to which data will be uploaded.
 
     Raises:
         TypeError: Error when provided features do not match expected format.
@@ -32,10 +35,17 @@ def upload_to_db(
             raise TypeError("Provided features should be a list of strings or path to text file.")
 
     load_dotenv()
-    connection_string = os.environ["CONNECTION_STRING"]
-    client = pymongo.MongoClient(connection_string)
-    db = client[db_name]
+    region_name = os.environ["REGION_NAME"]
+    aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+    aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+    s3 = boto3.resource(
+        service_name="s3",
+        region_name=region_name,
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+    )
 
+    temp_data_path = os.path.join(os.getcwd(), "temp_data.csv")
     progress_bar = trange(len(csv_files))
     for n in progress_bar:
         collection_name = os.path.split(csv_files[n])[1].split(".")[0]
@@ -44,13 +54,15 @@ def upload_to_db(
         processed_data = _process_dataframe(data, min_n_records)
         if not processed_data.empty:
             tqdm.write(f"Uploading {collection_name} data...")
-            processed_data = processed_data.to_dict(orient="records")
-            collection = db[collection_name]
-            collection.insert_many(processed_data)
+            processed_data.to_csv(temp_data_path)
+            s3.Bucket(s3_bucket_name).upload_file(Filename="temp_data.csv", Key=f"{collection_name}.txt")
         else:
             tqdm.write(
                 f"Skipping uploading {collection_name} data - no model meets minimum number of records condition."
             )
+
+    if os.path.exists(temp_data_path):
+        os.remove(temp_data_path)
 
 
 def _process_dataframe(df: pd.DataFrame, min_n_records: int) -> pd.DataFrame:
