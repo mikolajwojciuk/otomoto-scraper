@@ -20,6 +20,8 @@ st.set_page_config(
         "About": """
 App for providing insights about cars listed on otomoto.pl.
 The aim on this app is to enable users to get insights about cars without having to manually search through original web page.
+
+It was mainly created to get familiar with data scraping and AWS processing and storage.
 Implementation details can be found at https://github.com/mikolajwojciuk/otomoto-scraper.
 """
     },
