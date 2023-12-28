@@ -5,9 +5,9 @@ loguru
 lxml
 tqdm
 pre-commit
-pymongo
 python-dotenv
 boto3
 s3fs
 streamlit
 numpy
+plotly

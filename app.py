@@ -3,6 +3,7 @@
 import datetime
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import boto3
 import os
 from dotenv import load_dotenv
@@ -44,24 +45,21 @@ if "s3" not in st.session_state:
 
 if "car_makes" not in st.session_state:
     car_makes_data = st.session_state.s3.Bucket("otomoto-scrapper-car-makes").Object("car_makes.txt").get()
-    st.session_state.car_makes = pd.read_csv(car_makes_data["Body"], header=None)[0].to_list()
+    st.session_state.car_makes = pd.read_csv(car_makes_data["Body"], header=None, low_memory=False)[0].to_list()
 
 
 if "car_models" not in st.session_state:
     st.session_state.car_models = {}
     for make in st.session_state.car_makes:
         models_data = st.session_state.s3.Bucket("otomoto-scrapper-car-models").Object(f"car_models/{make}.txt").get()
-        st.session_state.car_models[make] = pd.read_csv(
-            models_data["Body"],
-            header=None,
-        )[0].to_list()
+        st.session_state.car_models[make] = pd.read_csv(models_data["Body"], header=None, low_memory=False)[0].to_list()
 
 if "car_data" not in st.session_state:
     st.session_state.car_data = {}
     for make in st.session_state.car_makes:
         try:
             make_data = st.session_state.s3.Bucket("otomoto-scrapper").Object(f"{make}.txt").get()
-            st.session_state.car_data[make] = pd.read_csv(make_data["Body"])
+            st.session_state.car_data[make] = pd.read_csv(make_data["Body"], low_memory=False)
         except ClientError as e:
             if not e.response["Error"]["Code"] == "NoSuchKey":
                 raise
@@ -130,22 +128,52 @@ if selected_make:
     data = process_data(data)
     left_column, right_column = st.columns(2)
     avg_price = str(int(data["Cena"].mean())) + " PLN"
-    left_column.subheader("Average price:   " + f":blue[{avg_price}]")
+    left_column.subheader("Average price:   ")
+    right_column.subheader(f":blue[{avg_price}]")
     avg_age = str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years"
-    left_column.subheader("Average age:   " + f":blue[{avg_age}]")
+    left_column.subheader("Average age:   ")
+    right_column.subheader(f":blue[{avg_age}]")
     avg_mileage = str(int(data["Przebieg"].mean())) + " km"
-    left_column.subheader("Average mileage:   " + f":blue[{avg_mileage}]")
+    left_column.subheader("Average mileage:   ")
+    right_column.subheader(f":blue[{avg_mileage}]")
     countries_origin = " ".join(data["Kraj pochodzenia"].value_counts()[:3].index.to_list())
     left_column.subheader("Most common countries of origin:   ")
-    left_column.subheader(f":blue[{countries_origin}]")
+    right_column.subheader(f":blue[{countries_origin}]")
     common_color = " ".join(data["Kolor"].value_counts()[:3].index.to_list())
     left_column.subheader("Most common colours:   ")
-    left_column.subheader(f":blue[{common_color}]")
+    right_column.subheader(f":blue[{common_color}]")
 
-    right_column.subheader("Fuel types")
-    right_column.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
+    left_column.subheader("Fuel types")
+    left_column.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
+
+    right_column.subheader("Body types")
+    right_column.bar_chart(data=data["Typ nadwozia"].value_counts().to_dict())
 
     left_column, right_column = st.columns(2)
+
+    left_column.subheader("Drivetrain types")
+    drivetrain_type_percentage = []
+    data_size = len(data)
+    for drivetrain in data["Napęd"].dropna().unique().tolist():
+        drivetrain_dict = {}
+        drivetrain_dict["Type of drivetrain"] = drivetrain
+        drivetrain_dict["Percentage"] = round(data["Napęd"].value_counts()[drivetrain] / data_size, 2)
+        drivetrain_type_percentage.append(drivetrain_dict)
+    drivetrain_type_percentage = pd.DataFrame(drivetrain_type_percentage)
+    drivetrain_type_plot = px.pie(drivetrain_type_percentage, names="Type of drivetrain", values="Percentage")
+    left_column.plotly_chart(drivetrain_type_plot, theme="streamlit", use_container_width=True)
+
+    right_column.subheader("Gearboxes types")
+    gearbox_type_percentage = []
+    data_size = len(data)
+    for gearbox in data["Skrzynia biegów"].dropna().unique().tolist():
+        gearbox_dict = {}
+        gearbox_dict["Type of gearbox"] = gearbox
+        gearbox_dict["Percentage"] = round(data["Skrzynia biegów"].value_counts()[gearbox] / data_size, 2)
+        gearbox_type_percentage.append(gearbox_dict)
+    gearbox_type_percentage = pd.DataFrame(gearbox_type_percentage)
+    gearbox_type_plot = px.pie(gearbox_type_percentage, names="Type of gearbox", values="Percentage")
+    right_column.plotly_chart(gearbox_type_plot, theme="streamlit", use_container_width=True)
 
     left_column.subheader("Year / Mileage")
     left_column.caption("Ratio calculated by averaging all cars mileages over manufacturing years")
@@ -181,6 +209,8 @@ if selected_make:
         )  # TODO: Add columns filtering
         mileage_price = mileage_price.set_index("Przebieg")
     st.line_chart(mileage_price)
+
+    x, y = st.columns(2)
 
 
 st.markdown(
