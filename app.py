@@ -4,11 +4,7 @@ import datetime
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import boto3
-import os
-from dotenv import load_dotenv
-from botocore.exceptions import ClientError
-from streamlit_utils.utils import process_data, smoothen_plot
+from streamlit_utils.utils import process_data, smoothen_plot, get_maker_data, get_session_state
 
 
 pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
@@ -28,59 +24,11 @@ Implementation details can be found at https://github.com/mikolajwojciuk/otomoto
     },
 )
 
-if "s3" not in st.session_state:
-    load_dotenv()
-
-    region_name = os.environ["REGION_NAME"]
-    aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
-    aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
-
-    st.session_state.s3 = boto3.resource(
-        service_name="s3",
-        region_name=region_name,
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-    )
-
-if "car_makes" not in st.session_state:
-    car_makes_data = st.session_state.s3.Bucket("otomoto-scrapper-car-makes").Object("car_makes.txt").get()
-    st.session_state.car_makes = pd.read_csv(car_makes_data["Body"], header=None, low_memory=False)[0].to_list()
-
-
-if "car_models" not in st.session_state:
-    st.session_state.car_models = {}
-    for make in st.session_state.car_makes:
-        models_data = st.session_state.s3.Bucket("otomoto-scrapper-car-models").Object(f"car_models/{make}.txt").get()
-        st.session_state.car_models[make] = pd.read_csv(models_data["Body"], header=None, low_memory=False)[0].to_list()
-
-if "car_data" not in st.session_state:
-    st.session_state.car_data = {}
-    for make in st.session_state.car_makes:
-        try:
-            make_data = st.session_state.s3.Bucket("otomoto-scrapper").Object(f"{make}.txt").get()
-            st.session_state.car_data[make] = pd.read_csv(make_data["Body"], low_memory=False)
-        except ClientError as e:
-            if not e.response["Error"]["Code"] == "NoSuchKey":
-                raise
-
-if "supported_vehicles" not in st.session_state:
-    st.session_state.supported_vehicles = {}
-    for make in list(st.session_state.car_data.keys()):
-        st.session_state.supported_vehicles[make] = st.session_state.car_data[make]["Model pojazdu"].unique()
-
 
 st.title("Otomoto analytics")
 st.caption("Get insights from Otomoto")
 
-st.divider()
 
-n_makes_metric, n_models_metric = st.columns(2)
-
-n_makes_metric.metric("Number of supported makes", str(len(list(st.session_state.supported_vehicles.keys()))))
-n_models_metric.metric(
-    "Number of supported models",
-    str(sum((len(st.session_state.supported_vehicles[make]) for make in st.session_state.supported_vehicles))),
-)
 st.caption(
     "Note: Number of supported makes and models depends on data availability. To make the analysis possible, models with at least 30 advertisements were selected."
 )
@@ -98,30 +46,47 @@ to get insights about it as well
           """
 )
 
+s3, car_makes, car_models = get_session_state()
+if "s3" not in st.session_state:
+    st.session_state.s3 = s3
+if "car_makes" not in st.session_state:
+    st.session_state.car_makes = car_makes
+if "car_models" not in st.session_state:
+    st.session_state.car_models = car_models
+if "car_data" not in st.session_state:
+    st.session_state.car_data = {}
+
 selected_make = col2.selectbox(
     label="Choose brand",
-    options=st.session_state.supported_vehicles.keys(),
+    options=st.session_state.car_makes,
     index=None,
     placeholder="Choose brand",
     label_visibility="collapsed",
 )
-if selected_make:
-    selected_model = col2.selectbox(
-        label="Choose model",
-        options=["All models"] + list(st.session_state.supported_vehicles[selected_make]),
-        index=0,
-        placeholder="Choose model",
-        label_visibility="collapsed",
-    )
-
 
 if selected_make:
+    if selected_make not in st.session_state.car_data.keys():
+        maker_data = get_maker_data(st.session_state.s3, selected_make)
+        if maker_data.empty:
+            st.warning(f"Sorry, {selected_make} is not supported yet. Please try another one.", icon="⚠️")
+        else:
+            st.session_state.car_data[selected_make] = maker_data
+
+    if selected_make in st.session_state.car_data.keys():
+        selected_model = col2.selectbox(
+            label="Choose model",
+            options=["All models"] + st.session_state.car_data[selected_make]["Model pojazdu"].unique().tolist(),
+            index=0,
+            placeholder="Choose model",
+            label_visibility="collapsed",
+        )
+
+
+if selected_make in st.session_state.car_data.keys():
     data = st.session_state.car_data[selected_make]
     if selected_model != "All models":
         data = data[data["Model pojazdu"] == selected_model]
 
-
-if selected_make:
     st.divider()
 
     data = process_data(data)
