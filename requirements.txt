@@ -10,3 +10,4 @@ python-dotenv
 boto3
 s3fs
 streamlit
+numpy

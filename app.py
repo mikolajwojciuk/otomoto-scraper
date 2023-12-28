@@ -6,12 +6,24 @@ import boto3
 import os
 from dotenv import load_dotenv
 from botocore.exceptions import ClientError
-from streamlit_utils.utils import process_data
+from streamlit_utils.utils import process_data, smoothen_plot
+
 
 pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
 
 
-st.set_page_config(page_title="Otomoto analytics", page_icon="🚗", layout="wide")
+st.set_page_config(
+    page_title="Otomoto analytics",
+    page_icon="🚗",
+    layout="wide",
+    menu_items={
+        "About": """
+App for providing insights about cars listed on otomoto.pl.
+The aim on this app is to enable users to get insights about cars without having to manually search through original web page.
+Implementation details can be found at https://github.com/mikolajwojciuk/otomoto-scraper.
+"""
+    },
+)
 
 if "s3" not in st.session_state:
     load_dotenv()
@@ -110,36 +122,55 @@ if selected_make:
 
 
 if selected_make:
+    st.divider()
+
     data = process_data(data)
-    metric, metric_value = st.columns(2)
-    metric.subheader("Average price")
-    metric_value.subheader(str(int(data["Cena"].mean())) + " PLN")
-    metric.subheader("Average age")
-    metric_value.subheader(str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years")
-    metric.subheader("Average mileage")
-    metric_value.subheader(str(int(data["Przebieg"].mean())) + " km")
-    metric.subheader("Fuel types")
-    metric_value.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
-    metric, metric_value = st.columns(2)
-    metric.subheader("Year / Mileage")
-    metric.caption("Ratio calculated by averaging all cars mileages over manufacturing years")
-    metric.caption(
+    left_column, right_column = st.columns(2)
+    left_column.subheader("Average price:   " + str(int(data["Cena"].mean())) + " PLN")
+    left_column.subheader(
+        "Average age:   " + str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years"
+    )
+
+    left_column.subheader("Average mileage:   " + str(int(data["Przebieg"].mean())) + " km")
+    right_column.subheader("Fuel types")
+    right_column.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
+
+    left_column, right_column = st.columns(2)
+
+    left_column.subheader("Year / Mileage")
+    left_column.caption("Ratio calculated by averaging all cars mileages over manufacturing years")
+    left_column.caption(
         "Possible gaps in the charts are due to a lack of cars from a specific model year with a specific type of power source."
     )
     data["Rok produkcji"] = data["Rok produkcji"].astype(str)
     year_mileage = data.groupby(["Rok produkcji", "Rodzaj paliwa"])["Przebieg"].mean().astype(int).reset_index()
     year_mileage = year_mileage.pivot(index="Rok produkcji", columns="Rodzaj paliwa", values="Przebieg")
-    metric_value.line_chart(year_mileage)
+    left_column.line_chart(year_mileage)
 
-    metric, metric_value = st.columns(2)
-    metric.subheader("Year / Price")
-    metric.caption("Ratio calculated by averaging all cars mileages over manufacturing years")
-    metric.caption(
+    right_column.subheader("Year / Price")
+    right_column.caption("Ratio calculated by averaging all cars mileages over manufacturing years")
+    right_column.caption(
         "Possible gaps in the charts are due to a lack of cars from a specific model year with a specific type of power source."
     )
     year_price = data.groupby(["Rok produkcji", "Rodzaj paliwa"])["Cena"].mean().astype(int).reset_index()
     year_price = year_price.pivot(index="Rok produkcji", columns="Rodzaj paliwa", values="Cena")
-    metric_value.line_chart(year_price)
+    right_column.line_chart(year_price)
+
+    st.subheader("Mileage / Price")
+    st.caption("Ratio calculated by averaging all cars prices over mileages")
+    st.caption(
+        "Note: Smoothening is performed by fitting exponential decay model and might not be indicative in all cases"
+    )
+    smoothen_toggle = st.toggle("Smoothen plot")
+    mileage_price = data.groupby(["Przebieg", "Rodzaj paliwa"])["Cena"].mean().astype(int).reset_index()
+    mileage_price = mileage_price.pivot(index="Przebieg", columns="Rodzaj paliwa", values="Cena")
+
+    if smoothen_toggle:
+        mileage_price = smoothen_plot(
+            data=mileage_price.reset_index(), columns=mileage_price.columns.to_list()
+        )  # TODO: Add columns filtering
+        mileage_price = mileage_price.set_index("Przebieg")
+    st.line_chart(mileage_price)
 
 
 st.markdown(
