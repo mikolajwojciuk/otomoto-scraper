@@ -1,4 +1,4 @@
-from utils.db_utils import upload_to_db
+from src.utils.db_utils import upload_to_db
 from glob import glob
 import os
 
