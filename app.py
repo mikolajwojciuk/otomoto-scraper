@@ -13,7 +13,6 @@ from streamlit_utils.utils import process_data, smoothen_plot
 
 pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
 
-
 st.set_page_config(
     page_title="Otomoto analytics",
     page_icon="🚗",
