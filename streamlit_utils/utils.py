@@ -26,7 +26,7 @@ def process_data(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def smoothen_plot(data: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
-    """Function for fitting polynomial to the column data in order to generate smooth plot from it.
+    """Function for fitting exponential decay to the column data in order to generate smooth plot from it.
 
     Args:
         data (pd.DataFrame): Input dataframe with columns with missing/noisy data to smoothen.
@@ -46,6 +46,7 @@ def smoothen_plot(data: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
 
     for coeff, column in zip(coeffs_array, columns):
         if not ((np.abs(coeff - coeffs_array.mean(axis=0))) > 2 * coeffs_array.std(axis=0)).any():
-            data[column] = np.exp(np.polyval(coeff, x))
+            if len(data) - data[column].isna().sum() > 1:
+                data[column] = np.exp(np.polyval(coeff, x))
 
     return data

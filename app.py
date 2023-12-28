@@ -1,4 +1,5 @@
 # pylint: disable=C0301
+# pylint: disable=C0103
 import datetime
 import streamlit as st
 import pandas as pd
@@ -128,12 +129,19 @@ if selected_make:
 
     data = process_data(data)
     left_column, right_column = st.columns(2)
-    left_column.subheader("Average price:   " + str(int(data["Cena"].mean())) + " PLN")
-    left_column.subheader(
-        "Average age:   " + str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years"
-    )
+    avg_price = str(int(data["Cena"].mean())) + " PLN"
+    left_column.subheader("Average price:   " + f":blue[{avg_price}]")
+    avg_age = str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years"
+    left_column.subheader("Average age:   " + f":blue[{avg_age}]")
+    avg_mileage = str(int(data["Przebieg"].mean())) + " km"
+    left_column.subheader("Average mileage:   " + f":blue[{avg_mileage}]")
+    countries_origin = " ".join(data["Kraj pochodzenia"].value_counts()[:3].index.to_list())
+    left_column.subheader("Most common countries of origin:   ")
+    left_column.subheader(f":blue[{countries_origin}]")
+    common_color = " ".join(data["Kolor"].value_counts()[:3].index.to_list())
+    left_column.subheader("Most common colours:   ")
+    left_column.subheader(f":blue[{common_color}]")
 
-    left_column.subheader("Average mileage:   " + str(int(data["Przebieg"].mean())) + " km")
     right_column.subheader("Fuel types")
     right_column.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
 
@@ -163,7 +171,7 @@ if selected_make:
     st.caption(
         "Note: Smoothening is performed by fitting exponential decay model and might not be indicative in all cases"
     )
-    smoothen_toggle = st.toggle("Smoothen plot")
+    smoothen_toggle = st.toggle("Smoothen plot", value=True)
     mileage_price = data.groupby(["Przebieg", "Rodzaj paliwa"])["Cena"].mean().astype(int).reset_index()
     mileage_price = mileage_price.pivot(index="Przebieg", columns="Rodzaj paliwa", values="Cena")
 
