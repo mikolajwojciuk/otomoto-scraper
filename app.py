@@ -90,23 +90,18 @@ if selected_make in st.session_state.car_data.keys():
     st.divider()
 
     data = process_data(data)
-    left_column, right_column = st.columns(2)
     avg_price = str(int(data["Cena"].mean())) + " PLN"
-    left_column.subheader("Average price:   ")
-    right_column.subheader(f":blue[{avg_price}]")
+    st.subheader("Average price:   " + f":blue[{avg_price}]")
     avg_age = str(datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())) + " years"
-    left_column.subheader("Average age:   ")
-    right_column.subheader(f":blue[{avg_age}]")
+    st.subheader("Average age:   " + f":blue[{avg_age}]")
     avg_mileage = str(int(data["Przebieg"].mean())) + " km"
-    left_column.subheader("Average mileage:   ")
-    right_column.subheader(f":blue[{avg_mileage}]")
+    st.subheader("Average mileage:   " + f":blue[{avg_mileage}]")
     countries_origin = " ".join(data["Kraj pochodzenia"].value_counts()[:3].index.to_list())
-    left_column.subheader("Most common countries of origin:   ")
-    right_column.subheader(f":blue[{countries_origin}]")
+    st.subheader("Most common countries of origin:   " + f":blue[{countries_origin}]")
     common_color = " ".join(data["Kolor"].value_counts()[:3].index.to_list())
-    left_column.subheader("Most common colours:   ")
-    right_column.subheader(f":blue[{common_color}]")
+    st.subheader("Most common colours:   " + f":blue[{common_color}]")
 
+    left_column, right_column = st.columns(2)
     left_column.subheader("Fuel types")
     left_column.bar_chart(data=data["Rodzaj paliwa"].value_counts().to_dict())
 
@@ -168,9 +163,7 @@ if selected_make in st.session_state.car_data.keys():
     mileage_price = mileage_price.pivot(index="Przebieg", columns="Rodzaj paliwa", values="Cena")
 
     if smoothen_toggle:
-        mileage_price = smoothen_plot(
-            data=mileage_price.reset_index(), columns=mileage_price.columns.to_list()
-        )  # TODO: Add columns filtering
+        mileage_price = smoothen_plot(data=mileage_price.reset_index(), columns=mileage_price.columns.to_list())
         mileage_price = mileage_price.set_index("Przebieg")
     st.line_chart(mileage_price)
 
