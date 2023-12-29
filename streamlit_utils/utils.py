@@ -10,7 +10,7 @@ import os
 
 
 @st.cache_resource(show_spinner=False)
-def get_session_state() -> tuple[boto3.s3, list, dict]:
+def get_session_state() -> tuple:
     """Prepare S3 session, list of car makes and dict of car models for streamlit session state
 
     Returns:
@@ -41,7 +41,7 @@ def get_session_state() -> tuple[boto3.s3, list, dict]:
     return s3, car_makes, car_models
 
 
-def get_maker_data(s3_resource: boto3.s3, maker: str) -> pd.DataFrame:
+def get_maker_data(s3_resource, maker: str) -> pd.DataFrame:
     """Function for downloading data on single car manufacturer
 
     Args:
