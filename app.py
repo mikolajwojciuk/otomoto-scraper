@@ -226,7 +226,7 @@ if (selected_make in st.session_state.car_data.keys()) and selected_model:
         }
 
         if st.button("Estimate price", use_container_width=True):
-            with st.spinner("Calculating prce estimate..."):
+            with st.spinner("Calculating price estimate..."):
                 prediction = estimate_price(prediction_features, data)
                 st.subheader(f"Estimated price: :blue[{prediction}]")
 
