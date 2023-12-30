@@ -2,7 +2,6 @@ pandas
 requests
 bs4
 loguru
-lxml
 tqdm
 pre-commit
 python-dotenv
