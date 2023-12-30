@@ -123,7 +123,7 @@ class CarScraper:
             logger.info(f"Error: {e}")
             raise SystemExit() from e
 
-        soup = BeautifulSoup(res.text, features="lxml")
+        soup = BeautifulSoup(res.text)
         if pagination_list_item := soup.find_all("li", attrs={"data-testid": "pagination-list-item"}):
             last_page_num = int(pagination_list_item[-1].text)
         else:

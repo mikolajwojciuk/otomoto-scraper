@@ -44,7 +44,7 @@ class AdvertisementFetcher:
             logger.info(f"Skipping {path} url.")
             return None
 
-        soup = BeautifulSoup(res.text, features="lxml")
+        soup = BeautifulSoup(res.text)
         if style_tags := soup.find_all("style"):
             for style_tag in style_tags:
                 style_tag.decompose()
