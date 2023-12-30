@@ -4,7 +4,7 @@ import datetime
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from streamlit_utils.utils import process_data, smoothen_plot, get_maker_data, get_session_state
+from streamlit_utils.utils import process_data, smoothen_plot, get_maker_data, get_session_state, estimate_price
 
 
 pd.options.mode.chained_assignment = None  # Disable Pandas SettingWithCopyWarning
@@ -167,7 +167,68 @@ if selected_make in st.session_state.car_data.keys():
         mileage_price = mileage_price.set_index("Przebieg")
     st.line_chart(mileage_price)
 
-    x, y = st.columns(2)
+
+if (selected_make in st.session_state.car_data.keys()) and selected_model:
+    data = st.session_state.car_data[selected_make]
+    data = data[data["Model pojazdu"] == selected_model]
+    data = process_data(data)
+    st.subheader("Price estimation")
+
+    if data is not None:
+        left_column, right_column = st.columns(2)
+        year = left_column.number_input(
+            min_value=int(data["Rok produkcji"].min()),
+            max_value=int(data["Rok produkcji"].max()),
+            value=int(data["Rok produkcji"].min()),
+            label="Year",
+            key="price_estimation_year",
+        )
+        mileage = right_column.text_input(label="Mileage (km)", value="100000", key="price_estimation_mileage")
+        fuel_type = left_column.selectbox(
+            label="Fuel type",
+            options=data["Rodzaj paliwa"].unique().tolist(),
+            index=0,
+            key="price_estimation_fuel_type",
+        )
+        power = right_column.text_input(label="Power (KM)", value="100", key="price_estimation_power")
+        gearbox_type = left_column.selectbox(
+            label="Gearbox type",
+            options=data["Skrzynia biegów"].unique().tolist(),
+            index=0,
+            key="price_estimation_gearbox_type",
+        )
+        drive_type = right_column.selectbox(
+            label="Drive type",
+            options=data["Napęd"].dropna().unique().tolist(),
+            index=0,
+            key="price_estimation_drive_type",
+        )
+        body_type = left_column.selectbox(
+            label="Body type", options=data["Typ nadwozia"].unique().tolist(), index=0, key="price_estimation_body_type"
+        )
+        color = right_column.selectbox(
+            label="Color", options=data["Kolor"].unique().tolist(), index=0, key="price_estimation_color"
+        )
+        clean_title = left_column.toggle(label="Clean title", value=False)
+        tow_hitch = right_column.toggle(label="Tow hitch", value=False)
+
+        prediction_features = {
+            "Rok produkcji": year,
+            "Przebieg": mileage,
+            "Rodzaj paliwa": fuel_type,
+            "Moc": power,
+            "Skrzynia biegów": gearbox_type,
+            "Napęd": drive_type,
+            "Typ nadwozia": body_type,
+            "Kolor": color,
+            "Bezwypadkowy": int(clean_title),
+            "Hak": int(tow_hitch),
+        }
+
+        if st.button("Estimate price", use_container_width=True):
+            with st.spinner("Calculating prce estimate..."):
+                prediction = estimate_price(prediction_features, data)
+                st.subheader(f"Estimated price: :blue[{prediction}]")
 
 
 st.markdown(

@@ -11,3 +11,4 @@ s3fs
 streamlit
 numpy
 plotly
+scikit-learn

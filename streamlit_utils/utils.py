@@ -7,6 +7,10 @@ from botocore.exceptions import ClientError
 import streamlit as st
 from dotenv import load_dotenv
 import os
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+from sklearn.compose import ColumnTransformer
 
 
 @st.cache_resource(show_spinner=False)
@@ -86,6 +90,13 @@ def process_data(data: pd.DataFrame) -> pd.DataFrame:
         data["Przebieg"].astype(str).apply(lambda x: (x.replace("km", "").replace(" ", ""))).astype(float)
     )
 
+    # Power processing
+    data.dropna(subset=["Moc"], inplace=True)
+    data["Moc"] = data["Moc"].astype(str).apply(lambda x: (x.replace("KM", "").replace(" ", ""))).astype(float)
+
+    # Production year processing
+    data.dropna(subset=["Rok produkcji"], inplace=True)
+
     return data
 
 
@@ -115,3 +126,73 @@ def smoothen_plot(data: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
                 data[column] = np.exp(np.polyval(coeff, x))
 
     return data
+
+
+def estimate_price(feature_dict: dict, data: pd.DataFrame) -> float:
+    """Function for estimating price of a car based on its features.
+
+    Args:
+        feature_dict (dict): Dictionary with car features (keys) and their values.
+        data (pd.DataFrame): Processed dataframe with car data.
+    """
+    columns_to_drop = [
+        "Marka pojazdu",
+        "Model pojazdu",
+        "Kraj pochodzenia",
+        "Stan",
+        "Waluta",
+        "Url",
+        "Oferta od",
+        "Pojemność skokowa",
+        "Rodzaj koloru",
+    ]
+    columns_min_max = ["Rok produkcji", "Przebieg", "Moc"]
+    columns_one_hot = ["Rodzaj paliwa", "Skrzynia biegów", "Napęd", "Typ nadwozia", "Kolor"]
+    binary_columns_to_drop = [
+        column
+        for column in data.select_dtypes(include=["float64"]).columns.to_list()
+        if column not in ["Hak", "Bezwypadkowy", "Cena", "Przebieg", "Moc"]
+    ]
+
+    data = data.drop(binary_columns_to_drop, axis=1)
+    data = data.drop(columns_to_drop, axis=1)
+    # data = process_data(data)
+
+    target = data["Cena"]
+    data.drop(["Cena"], axis=1, inplace=True)
+    features = data.drop([column for column in data.columns if column not in feature_dict.keys()], axis=1)
+
+    print(features.columns)
+
+    for column in features.columns:
+        if features[column].isna().sum() > 0:
+            features[column].fillna(features[column].value_counts().index[0], inplace=True)
+
+    transformers = [
+        ("num", "passthrough", features.select_dtypes(exclude=["object"]).columns),
+        ("cat", OneHotEncoder(), columns_one_hot),
+        ("min_max", MinMaxScaler(), columns_min_max),
+    ]
+
+    preprocessor = ColumnTransformer(transformers=transformers)
+    features = preprocessor.fit_transform(features)
+
+    model = RandomForestRegressor(random_state=2137)
+
+    param_dist = {
+        "n_estimators": [50, 100],
+        "max_depth": [None, 10, 20],
+        "min_samples_split": [2, 5],
+        "min_samples_leaf": [1, 2, 4],
+    }
+
+    random_search = RandomizedSearchCV(
+        model, param_distributions=param_dist, n_iter=5, cv=2, scoring="neg_mean_squared_error", random_state=2137
+    )
+    random_search.fit(features, target)
+
+    prediction_features = preprocessor.transform(pd.DataFrame([feature_dict]))
+    result = int(random_search.predict(prediction_features))
+    result -= result % 100
+
+    return result
