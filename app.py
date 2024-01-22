@@ -168,7 +168,7 @@ if selected_make in st.session_state.car_data.keys():
     st.line_chart(mileage_price)
 
 
-if (selected_make in st.session_state.car_data.keys()) and selected_model:
+if (selected_make in st.session_state.car_data.keys()) and selected_model != "All models":
     data = st.session_state.car_data[selected_make]
     data = data[data["Model pojazdu"] == selected_model]
     data = process_data(data)
