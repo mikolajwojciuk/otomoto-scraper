@@ -14,7 +14,7 @@ def upload_to_db(
     min_n_records: int = 100,
     s3_bucket_name: str = "otomoto-scrapper",
 ) -> None:
-    """Function for uploading scraped csv files to MongoDB database
+    """Function for uploading scraped csv files to S3.
 
     Args:
         csv_files (List[str]): List of csv files.
@@ -66,7 +66,7 @@ def upload_to_db(
 
 
 def _process_dataframe(df: pd.DataFrame, min_n_records: int) -> pd.DataFrame:
-    """Process dataframe in order to meet MongoDB requirements.
+    """Process dataframe.
 
     Args:
         df (pd.DataFrame): DataFrame to be processed
