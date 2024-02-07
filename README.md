@@ -29,7 +29,7 @@ python src/main.py
 If needed, You can also scrap data on individual car makers: see **src/main.py** and modify it according to Your needs, following provided instructions.
 
 
-**NOTE:** This process can take a long time, depending on number of cars available on website. Progress can be tracked in terminal.
+**NOTE:** This process can take a long time, depending on number of cars available on website. Progress will be shown in terminal.
 
 ### Uploading data to S3
 Demo app is designed to work with data stored in AWS S3 bucket. In order to upload data to S3, make sure it has been downloaded. You also have to create **.env** file, following the provided **.env_template**.
@@ -44,3 +44,13 @@ streamlit run app.py
 ```
 
 **NOTE:** This app was not designed to be used in production. It was created for educational purposes. It might require further development and running it locally will require access to data stored in S3 bucket as well as accordingly modifyied bucket names in streamlit_utils/utils.py file.
+
+
+## TODO
+Project is still under development
+
+- [x] Streamlit demo
+- [ ] S3 configuration
+- [ ] Additional demo plots
+- [ ] Extending project to scrap mobile.de data
+- [ ] Create pipeline for periodic data scraping
