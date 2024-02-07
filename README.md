@@ -32,8 +32,8 @@ If needed, You can also scrap data on individual car makers: see **src/main.py**
 **NOTE:** This process can take a long time, depending on number of cars available on website. Progress can be tracked in terminal.
 
 ### Uploading data to S3
-Demo app is designed to work with data stored in AWS S3 bucket. In order to upload data to S3, make sure it have been downloaded. You also have to create **.env** file, following the provided **.env_template**.
-Script for uploading data to S3 can be found [here](https://github.com/mikolajwojciuk/otomoto-scraper/blob/main/src/db_upload.py). When using it, make sure to provide correct bucket name in **upload_to_db** function.
+Demo app is designed to work with data stored in AWS S3 bucket. In order to upload data to S3, make sure it has been downloaded. You also have to create **.env** file, following the provided **.env_template**.
+Script for uploading data to S3 can be found [here](https://github.com/mikolajwojciuk/otomoto-scraper/blob/main/src/db_upload.py). When using it, make sure to provide correct bucket name in **upload_to_db** function. This step is required if one wants to run the demo app locally.
 
 
 ### Demo
