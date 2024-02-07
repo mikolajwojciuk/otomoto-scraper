@@ -100,7 +100,7 @@ if selected_make in st.session_state.car_data.keys():
     avg_price = str(int(data["Cena"].mean())) + " PLN"
     st.subheader("Średnia cena:   " + f":blue[{avg_price}]")
     avg_age = datetime.date.today().year - int(data["Rok produkcji"].astype(int).mean())
-    st.subheader("Średni wiek:   " + f":blue[{str(avg_age)}" + " " + get_polish_age(avg_age))
+    st.subheader("Średni wiek:   " + f":blue[{str(avg_age)}]" + " " + f":blue[{get_polish_age(avg_age)}]")
     avg_mileage = str(int(data["Przebieg"].mean())) + " km"
     st.subheader("Średni przebieg:   " + f":blue[{avg_mileage}]")
     countries_origin = " ".join(data["Kraj pochodzenia"].value_counts()[:3].index.to_list())
