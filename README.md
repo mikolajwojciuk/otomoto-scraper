@@ -43,7 +43,7 @@ If You want to run it locally, run:
 streamlit run app.py
 ```
 
-**NOTE:** This app was not designed to be used in production. It was created for educational purposes. It might require further development and running it locally will require access to data stored in S3 bucket as well as accordingly modifyied bucket names in streamlit_utils/utils.py file.
+**NOTE:** This app was not designed to be used in production. It was created for educational purposes. It might require further development and running it locally will require access to data stored in S3 bucket as well as accordingly modified bucket names in streamlit_utils/utils.py file.
 
 
 ## TODO
