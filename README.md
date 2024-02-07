@@ -26,7 +26,7 @@ In order to scrap all available data, run:
 ```bash
 python src/main.py
 ```
-If needed, You can also scrap data on individual car makers: see [main.py](https://github.com/mikolajwojciuk/otomoto-scraper/blob/main/src/main.py) and modify it according to Your needs, following provided instructions.
+If needed, You can also scrap data on individual car makers: see **src/main.py** and modify it according to Your needs, following provided instructions.
 **NOTE:** This process can take a long time, depending on number of cars available on website. Progress can be tracked in terminal.
 
 ### Uploading data to S3
