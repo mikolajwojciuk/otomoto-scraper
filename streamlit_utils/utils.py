@@ -196,3 +196,20 @@ def estimate_price(feature_dict: dict, data: pd.DataFrame) -> float:
     result -= result % 100
 
     return result
+
+
+def get_polish_age(age: int) -> str:
+    """Translate word 'year' to polish with accordance to the value.
+
+    Args:
+        age (int): Number representing car age.
+
+    Returns:
+        str: Polish translation.
+    """
+
+    if age == 1:
+        return "rok"
+    if 1 < age <= 4:
+        return "lata"
+    return "lat"
