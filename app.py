@@ -23,7 +23,8 @@ st.set_page_config(
     menu_items={
         "About": """
 App for providing insights about cars listed on otomoto.pl.
-The aim on this app is to enable users to get insights about cars without having to manually search through original web page.
+The aim on this app is to enable users to get insights about cars without
+having to manually search through original web page.
 
 It was mainly created to get familiar with data scraping and AWS processing and storage.
 Implementation details can be found at https://github.com/mikolajwojciuk/otomoto-scraper.
@@ -175,7 +176,7 @@ if selected_make in st.session_state.car_data.keys():
     st.line_chart(mileage_price)
 
 
-if (selected_make in st.session_state.car_data.keys()) and selected_model != "All models":
+if (selected_make in st.session_state.car_data.keys()) and selected_model != "Wszystkie modele":
     data = st.session_state.car_data[selected_make]
     data = data[data["Model pojazdu"] == selected_model]
     data = process_data(data)
